@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>著者憑依・本音インタビュー｜現代文・壁打ち特化</title>
+<meta name="description" content="クセの強い著者たちにインタビューして本音を引き出す、現代文・壁打ち特化アプリ。高校受験・共通テスト・難関大二次記述まで、全20問の本音インタビュー。">
+<meta property="og:title" content="著者憑依・本音インタビュー">
+<meta property="og:description" content="著者は、本音でしか語らない。クセ者ぞろいの著者6人から本音を引き出す現代文トレーニング。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="og-image.png">
+<link rel="icon" href="icon-180.png">
+<link rel="apple-touch-icon" href="icon-180.png">
+<style>
+:root{
+  --ink:#26222e; --paper:#f8f3e6; --paper2:#fffdf6;
+  --wine:#7a1f2b; --wine2:#9c2b3a; --gold:#c9962e; --gold2:#eec25e;
+  --teal:#14666b; --navy:#2c3a67;
+  --shadow:0 4px 14px rgba(38,34,46,.16);
+  --ch1:#2563eb; --ch2:#7c3aed; --ch3:#be185d; --ch4:#b45309;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+html,body{margin:0;padding:0;}
+body{
+  font-family:"Hiragino Mincho ProN","Hiragino Sans","Noto Sans JP",serif;
+  background:#171320 radial-gradient(circle at 15% 0%, #3d2b4d 0%, transparent 55%),
+             radial-gradient(circle at 90% 100%, #4d3410 0%, transparent 50%);
+  color:var(--ink); min-height:100vh;
+}
+#app{max-width:560px;margin:0 auto;min-height:100vh;background:var(--paper);
+  box-shadow:0 0 40px rgba(0,0,0,.45); position:relative; overflow:hidden;
+  display:flex; flex-direction:column;}
+.screen{display:none; flex-direction:column; flex:1; min-height:0;}
+.screen.active{display:flex;}
+button{font-family:inherit; cursor:pointer;}
+.btn{
+  border:none; border-radius:999px; padding:14px 22px; font-size:17px; font-weight:800;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+  background:linear-gradient(180deg,var(--wine2),var(--wine)); color:#fff;
+  box-shadow:0 4px 0 #4d1219, var(--shadow); transition:transform .06s, box-shadow .06s;
+}
+.btn:active{transform:translateY(3px); box-shadow:0 1px 0 #4d1219;}
+.btn.sub{background:linear-gradient(180deg,#fdfdfd,#eae4cf); color:var(--ink); box-shadow:0 4px 0 #b3a888, var(--shadow);}
+.btn.sub:active{box-shadow:0 1px 0 #b3a888;}
+.btn.gold{background:linear-gradient(180deg,var(--gold2),var(--gold)); color:#4a2f00; box-shadow:0 4px 0 #8a6410, var(--shadow);}
+.btn.gold:active{box-shadow:0 1px 0 #8a6410;}
+.btn:disabled{opacity:.45; pointer-events:none;}
+.btn.big{font-size:20px; padding:16px 30px; width:100%;}
+.sound-toggle{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; padding:6px 14px;
+  font-size:14px; font-weight:800; font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.topbar{
+  display:flex; align-items:center; gap:8px; padding:10px 14px;
+  background:var(--paper2); border-bottom:2px solid #e7ddc2; position:sticky; top:0; z-index:5;
+}
+.topbar .tb-title{font-weight:900; font-size:15px; flex:1; line-height:1.3;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.back-btn{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; padding:6px 13px;
+  font-size:13.5px; font-weight:800; font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.linklike{background:none;border:none;color:var(--wine);font-weight:800;font-size:12.5px;text-decoration:underline;padding:2px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+/* ---------- タイトル ---------- */
+#screen-title{align-items:center; text-align:center; padding:30px 18px 16px;
+  background:linear-gradient(180deg,#f3dfae 0%, var(--paper) 58%);}
+.title-band{
+  background:linear-gradient(90deg,var(--wine),var(--navy)); color:#fff; font-weight:900;
+  letter-spacing:.3em; padding:6px 16px 6px calc(16px + .3em); border-radius:4px; font-size:13.5px;
+  box-shadow:var(--shadow); font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+h1.logo{margin:14px 0 2px; font-size:38px; line-height:1.25; font-weight:900; color:var(--ink);}
+h1.logo .accent{color:var(--wine);}
+.title-sub{font-size:15px; font-weight:700; color:#5c5470; margin:6px 0 2px; line-height:1.7;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.title-authors{display:flex; gap:6px; justify-content:center; margin:14px 0 4px; flex-wrap:wrap;}
+.title-authors .ta-face{width:52px; height:52px; background:#fff; border:2px solid #e2d7b8; border-radius:50%; padding:2px;}
+.title-stats{display:flex; gap:10px; justify-content:center; margin:12px 0 4px; flex-wrap:wrap;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.stat-chip{
+  background:#fff; border:2px solid #e2d7b8; border-radius:14px; padding:8px 14px;
+  font-size:13px; font-weight:800; box-shadow:var(--shadow);
+}
+.stat-chip b{font-size:19px; color:var(--wine);}
+.title-badge{
+  display:inline-block; background:var(--gold2); color:#4a2f00; font-weight:900;
+  font-size:13.5px; border-radius:999px; padding:4px 14px; margin-top:6px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.title-btns{display:flex; flex-direction:column; gap:12px; width:100%; max-width:340px; margin-top:16px;}
+.title-foot{margin-top:auto; padding:18px 0 4px; font-size:12px; color:#8a8171; line-height:1.7;}
+/* ---------- ステータスカード ---------- */
+.status-card{
+  margin:12px 14px 4px; background:linear-gradient(135deg,#3d1220,#7a1f2b 60%,#2c3a67);
+  color:#fff; border-radius:18px; padding:14px 16px; box-shadow:var(--shadow);
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.status-card .sc-big{font-size:13px; font-weight:800; opacity:.92;}
+.status-card .sc-big b{font-size:30px; line-height:1; margin-left:4px;}
+.status-card .sc-row{font-size:13px; font-weight:700; margin-top:7px; display:flex; gap:14px; flex-wrap:wrap;}
+.progress-track{height:9px; background:rgba(255,255,255,.28); border-radius:99px; margin-top:8px; overflow:hidden;}
+.progress-fill{height:100%; background:linear-gradient(90deg,var(--gold2),#f97316); border-radius:99px; transition:width .5s;}
+.screen .progress-track{background:#e7ddc2;}
+.screen .progress-fill{background:linear-gradient(90deg,var(--gold),var(--wine2));}
+/* ---------- マップ ---------- */
+.level-bar{display:flex; gap:6px; flex-wrap:wrap; padding:12px 14px 2px; align-items:center;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.level-bar .lb-label{font-size:11.5px; font-weight:800; color:#8a8171;}
+.level-chip{
+  border:2px solid #ddd2ae; background:#fff; border-radius:999px; padding:6px 13px;
+  font-size:13px; font-weight:800;
+}
+.level-chip.active{background:var(--wine); border-color:var(--wine); color:#fff;}
+.chapter-block{padding:10px 14px 2px;}
+.chapter-head{
+  font-weight:900; font-size:16px; margin:8px 0 8px; padding-left:10px; border-left:6px solid var(--wine);
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.stages{display:flex; flex-direction:column; gap:10px; padding-bottom:16px;}
+.stage-card{
+  display:flex; gap:12px; align-items:center; text-align:left; width:100%;
+  background:#fff; border:2px solid #e2d7b8; border-radius:16px; padding:12px 14px;
+  box-shadow:var(--shadow); border-left:8px solid var(--wine);
+}
+.stage-card .st-face{width:58px; height:58px; flex:none; background:var(--paper); border-radius:50%; padding:2px; border:2px solid #e2d7b8;}
+.stage-card .st-main{flex:1; min-width:0;}
+.stage-card .st-id{font-size:11.5px; font-weight:900; color:#8a8171; letter-spacing:.08em;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.stage-card .st-title{font-size:16.5px; font-weight:900; line-height:1.35; margin:1px 0;}
+.stage-card .st-author{font-size:13px; font-weight:700; color:#5c5470;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.stage-card .st-meta{display:flex; gap:10px; align-items:center; margin-top:5px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.stage-card .st-prog{font-size:12.5px; font-weight:800; color:var(--wine);}
+.mini-track{flex:1; height:7px; background:#eee3c2; border-radius:99px; overflow:hidden;}
+.mini-fill{height:100%; background:linear-gradient(90deg,var(--gold),var(--wine2));}
+/* ---------- 紹介 ---------- */
+.intro-body{padding:14px 16px 8px; overflow-y:auto;}
+.intro-level{
+  display:inline-block; background:#efe6cc; border-radius:999px; padding:3px 12px;
+  font-size:12px; font-weight:800; color:#6b5d33; font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.intro-body h2{font-size:21px; line-height:1.4; margin:10px 0 12px;}
+.author-profile{
+  display:flex; gap:14px; background:#fff; border:2px solid #e2d7b8; border-radius:16px;
+  padding:14px; box-shadow:var(--shadow); align-items:flex-start;
+}
+.author-profile .ap-avatar{width:96px; height:96px; flex:none; background:var(--paper); border-radius:50%; padding:3px; border:2px solid #e2d7b8;}
+.ap-name{font-size:18px; font-weight:900; line-height:1.35;}
+.ap-genre{font-size:12.5px; font-weight:800; color:var(--wine); margin-top:2px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.ap-quirk{font-size:13.5px; line-height:1.6; color:#4c4658; margin-top:5px;}
+.greeting{
+  margin-top:12px; background:#fdf6dd; border:2px dashed #d9c98a; border-radius:14px;
+  padding:12px 14px; font-size:15px; line-height:1.75;
+}
+.intro-list-head{font-weight:900; font-size:14px; margin:16px 0 6px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.iv-list{display:flex; flex-direction:column; gap:7px;}
+.iv-item{
+  display:flex; gap:10px; align-items:center; background:#fff; border:2px solid #e7ddc2;
+  border-radius:12px; padding:9px 12px; font-size:14px;
+}
+.iv-item .iv-state{font-size:11px; font-weight:900; border-radius:999px; padding:2px 9px; flex:none;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.iv-state.done{background:#fde68a; color:#7c4a03;}
+.iv-state.weak{background:#fecaca; color:#7f1d1d;}
+.iv-state.todo{background:#e5e0d0; color:#6b6552;}
+.intro-btns{padding:12px 16px 18px; display:flex; flex-direction:column; gap:10px;}
+/* ---------- セッション ---------- */
+#screen-session{background:var(--paper);}
+.session-head{
+  padding:10px 14px 8px; background:var(--paper2); border-bottom:2px solid #e7ddc2;
+  position:sticky; top:0; z-index:5;
+}
+.sh-row{display:flex; align-items:center; gap:8px;}
+.sh-row .gh-stage{font-size:12px; font-weight:900; color:#8a8171; letter-spacing:.05em;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.sh-row .gh-topic{flex:1; font-size:13.5px; font-weight:800; line-height:1.3; min-width:0;}
+.sh-row .gh-count{font-size:12.5px; font-weight:900; color:var(--wine);
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.session-author{
+  display:flex; gap:12px; align-items:center; padding:10px 14px 4px;
+}
+.session-author .sa-face{width:74px; height:74px; flex:none; background:#fff; border-radius:50%; padding:3px; border:2px solid #e2d7b8; position:relative;}
+.session-author .sa-face.aura{box-shadow:0 0 0 4px var(--gold2), 0 0 26px 8px rgba(238,194,94,.75);}
+.session-author .sa-name{font-size:16px; font-weight:900;}
+.session-author .sa-int{font-size:12.5px; font-weight:800; color:var(--wine);
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.passage-card{
+  margin:8px 14px 4px; background:#fffdf6; border:2px solid #d9c98a; border-radius:14px;
+  padding:12px 14px; box-shadow:var(--shadow);
+}
+.passage-card .pc-label{font-size:11px; font-weight:900; letter-spacing:.2em; color:#8a6d1f;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.passage-card .pc-text{font-size:15.5px; line-height:1.9; margin-top:4px; max-height:180px; overflow-y:auto;}
+#dialogue-feed{flex:1; overflow-y:auto; padding:10px 14px; display:flex; flex-direction:column; gap:10px; min-height:120px;}
+.msg{
+  max-width:88%; border-radius:16px; padding:10px 13px; font-size:15px; line-height:1.75;
+  box-shadow:var(--shadow); white-space:pre-wrap; word-break:break-word; position:relative;
+}
+.msg .msg-who{
+  display:block; font-size:11px; font-weight:900; letter-spacing:.06em; margin-bottom:3px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.msg.author{background:#fff; border:2px solid #e2d7b8; align-self:flex-start; border-bottom-left-radius:4px;}
+.msg.author .msg-who{color:var(--wine);}
+.msg.user{background:linear-gradient(180deg,#fdf3d0,#fbe9b7); border:2px solid #e3cf8d; align-self:flex-end; border-bottom-right-radius:4px;}
+.msg.user .msg-who{color:#8a6d1f;}
+.msg.pushback{background:#fdf0f0; border:2px solid #d88a8a; align-self:flex-start; border-bottom-left-radius:4px;}
+.msg.pushback .msg-who{color:#a11d1d;}
+.msg.confess{background:linear-gradient(180deg,#fff7d6,#ffedb0); border:2px solid var(--gold); align-self:flex-start; border-bottom-left-radius:4px;}
+.msg.confess .msg-who{color:#8a6d1f;}
+.msg.memo{background:#eef4f4; border:2px solid #9db8b8; align-self:stretch; max-width:100%;}
+.msg.memo .msg-who{color:var(--teal);}
+.honne-card{
+  margin:2px 0; background:linear-gradient(135deg,#3d1220,#7a1f2b); color:#ffe9a8;
+  border-radius:14px; padding:12px 14px; box-shadow:var(--shadow); align-self:stretch; max-width:100%;
+}
+.honne-card .hc-label{font-size:11px; font-weight:900; letter-spacing:.18em; color:var(--gold2);
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.honne-card .hc-text{font-size:15px; line-height:1.8; margin-top:4px; white-space:pre-wrap;}
+.honne-card .hc-gain{font-size:12.5px; font-weight:900; color:#fff; margin-top:6px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.strategy-card{
+  background:#fff; border:2px solid var(--teal); border-radius:14px; padding:12px 14px;
+  box-shadow:var(--shadow); align-self:stretch; max-width:100%;
+}
+.strategy-card .sc-head{font-weight:900; font-size:15.5px; color:var(--teal); line-height:1.5;}
+.strategy-card .sc-label{font-size:11px; font-weight:900; letter-spacing:.14em; color:#8a8171; margin-top:8px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.strategy-card .sc-text{font-size:14.5px; line-height:1.75; margin-top:2px;}
+.strategy-card .sc-text.trap{color:#a11d1d;}
+#input-area{padding:10px 14px 14px; background:var(--paper2); border-top:2px solid #e7ddc2;}
+#input-area textarea{
+  width:100%; min-height:74px; border:2px solid #d9c98a; border-radius:14px; padding:11px 12px;
+  font-size:16px; line-height:1.6; font-family:inherit; background:#fff; resize:vertical;
+}
+.hint-chips{display:flex; gap:6px; flex-wrap:wrap; margin:8px 0 2px; align-items:center;}
+.hint-chips .hc-label2{font-size:11px; font-weight:900; color:#8a8171;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.hint-chip{
+  background:#fdf6dd; border:1.5px dashed #c9a83c; color:#6b5d33; border-radius:999px;
+  padding:4px 11px; font-size:12.5px; font-weight:700;
+}
+.free-row{display:flex; gap:10px; margin-top:9px; align-items:stretch;}
+.free-row .btn{flex:1;}
+.mic-btn{
+  border:2px solid var(--ink); background:#fff; border-radius:999px; width:56px; flex:none;
+  display:flex; align-items:center; justify-content:center;
+}
+.mic-btn.rec{background:#fecaca; border-color:#a11d1d;}
+.choices{display:flex; flex-direction:column; gap:9px;}
+.choice-btn{
+  text-align:left; background:#fff; border:2px solid #d9c98a; border-radius:14px;
+  padding:12px 13px; font-size:15px; line-height:1.65; box-shadow:var(--shadow);
+  display:flex; gap:9px; align-items:flex-start;
+}
+.choice-btn .ch-id{
+  flex:none; background:var(--wine); color:#fff; font-weight:900; border-radius:8px;
+  padding:1px 9px; font-size:13px; margin-top:2px; font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+.choice-btn:active{transform:scale(.99);}
+.giveup-row{margin-top:10px; text-align:center;}
+#next-row{padding:10px 14px 16px; background:var(--paper2); border-top:2px solid #e7ddc2;}
+.shake{animation:shake .45s;}
+@keyframes shake{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(3px)}}
+.lean{animation:lean .6s;}
+@keyframes lean{0%{transform:scale(1)}40%{transform:scale(1.13) rotate(-2deg)}100%{transform:scale(1.05)}}
+/* ---------- 結果 ---------- */
+.result-body{padding:18px 16px; overflow-y:auto; text-align:center;}
+.result-body .r-int{font-size:14px; font-weight:800; color:#5c5470;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.result-body .r-int b{font-size:38px; color:var(--wine);}
+.result-list{margin:16px 0; text-align:left; display:flex; flex-direction:column; gap:8px;}
+.result-item{
+  display:flex; justify-content:space-between; gap:12px; background:#fff; border:2px solid #e7ddc2;
+  border-radius:12px; padding:10px 13px; font-size:14.5px;
+}
+.result-item span:last-child{font-weight:900; text-align:right;}
+.result-btns{display:flex; flex-direction:column; gap:10px; margin-top:8px;}
+/* ---------- 本音メモ帳 ---------- */
+.memo-body{padding:12px 14px 18px; overflow-y:auto;}
+.memo-author-head{display:flex; gap:11px; align-items:center; margin:14px 0 8px;}
+.memo-author-head .ma-face{width:52px; height:52px; background:#fff; border-radius:50%; padding:2px; border:2px solid #e2d7b8;}
+.memo-author-head .ma-name{font-size:16.5px; font-weight:900;}
+.memo-author-head .ma-int{font-size:12px; font-weight:800; color:var(--wine);
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.memo-item{background:#fff; border:2px solid #e7ddc2; border-radius:14px; padding:11px 13px; margin-bottom:9px;}
+.memo-item .mi-topic{font-weight:900; font-size:14.5px; line-height:1.45;}
+.memo-item .mi-meta{font-size:11.5px; font-weight:800; color:#8a8171; margin-top:2px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;}
+.memo-item .mi-honne{font-size:14px; line-height:1.75; margin-top:7px; background:#fdf6dd; border-radius:10px; padding:9px 11px;}
+.memo-item .mi-strategy{font-size:13.5px; line-height:1.7; margin-top:7px; color:#14532d;}
+.memo-item .mi-locked{font-size:13.5px; color:#8a8171; margin-top:6px; line-height:1.6;}
+.memo-item .mi-row{display:flex; justify-content:flex-end; margin-top:8px;}
+.memo-item .mi-row .btn{padding:9px 18px; font-size:14px;}
+.empty-note{
+  text-align:center; color:#8a8171; font-size:14.5px; line-height:1.8; padding:26px 10px;
+  font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+/* ---------- 演出 ---------- */
+#confetti-canvas{position:fixed; inset:0; pointer-events:none; z-index:60;}
+#fx-flash{position:fixed; inset:0; background:#fff8d6; opacity:0; pointer-events:none; z-index:55; transition:opacity .5s;}
+#fx-stamp{
+  position:fixed; left:50%; top:34%; transform:translate(-50%,-50%) rotate(-10deg) scale(3);
+  border:5px solid #a11d1d; color:#a11d1d; border-radius:12px; padding:6px 22px;
+  font-size:34px; font-weight:900; letter-spacing:.2em; opacity:0; pointer-events:none; z-index:61;
+  background:rgba(255,253,246,.85); font-family:"Hiragino Sans","Noto Sans JP",sans-serif;
+}
+#fx-stamp.show{animation:stamp .8s forwards;}
+@keyframes stamp{0%{opacity:0; transform:translate(-50%,-50%) rotate(-10deg) scale(3)}
+  35%{opacity:1; transform:translate(-50%,-50%) rotate(-10deg) scale(1)}
+  80%{opacity:1} 100%{opacity:0; transform:translate(-50%,-50%) rotate(-10deg) scale(.96)}}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- タイトル -->
+  <section class="screen" id="screen-title">
+    <div class="title-band">著者は、本音でしか語らない</div>
+    <h1 class="logo">著者憑依<br><span class="accent">本音インタビュー</span></h1>
+    <p class="title-sub">クセの強い著者6人が、キミの切り込みを待っている。<br>読みが浅ければ渋い顔。核心を突けば、本音が聞ける。</p>
+    <div class="title-authors" id="title-authors"></div>
+    <div class="title-stats">
+      <span class="stat-chip">総親密度 <b id="title-intimacy">0</b>/560</span>
+      <span class="stat-chip">引き出した本音 <b id="title-honne">0</b>/20</span>
+    </div>
+    <div><span class="title-badge" id="title-rank">通りすがりの読者</span></div>
+    <div class="title-btns">
+      <button class="btn big gold" id="btn-to-map">インタビューをはじめる</button>
+      <button class="btn big sub" id="btn-to-memo">本音メモ帳（<span id="title-weak">0</span>件リベンジ待ち）</button>
+    </div>
+    <div class="title-foot">
+      <button class="sound-toggle" id="sound-toggle-title">音：オン</button><br>
+      バージョン 1.0.0<br>
+      <button class="linklike" id="btn-update">最新の版に更新する</button><br>
+      © 著者憑依・本音インタビュー
+    </div>
+  </section>
+
+  <!-- マップ -->
+  <section class="screen" id="screen-map">
+    <div class="topbar">
+      <button class="back-btn" id="btn-back-title">← タイトル</button>
+      <div class="tb-title">著者ラウンジ（マップ）</div>
+      <button class="sound-toggle" id="sound-toggle-map">音：オン</button>
+    </div>
+    <div class="status-card">
+      <div class="sc-big">キミへの総親密度<b id="map-intimacy">0</b></div>
+      <span class="title-badge" id="map-rank">通りすがりの読者</span>
+      <div class="sc-row">
+        <span>本音 <span id="map-honne">0</span>/20</span>
+        <span>コンボ <span id="map-combo">0</span>（最高 <span id="map-best">0</span>）</span>
+        <span>リベンジ待ち <span id="map-weak">0</span>件</span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="map-progress" style="width:0%"></div></div>
+    </div>
+    <div class="level-bar" id="level-bar">
+      <span class="lb-label">レベル絞込:</span>
+    </div>
+    <div id="chapters-box"></div>
+  </section>
+
+  <!-- ステージ紹介 -->
+  <section class="screen" id="screen-intro">
+    <div class="topbar">
+      <button class="back-btn" id="btn-back-map">← マップ</button>
+      <div class="tb-title" id="intro-crumb">著者紹介</div>
+    </div>
+    <div class="intro-body">
+      <span class="intro-level" id="intro-level"></span>
+      <h2 id="intro-title"></h2>
+      <div class="author-profile">
+        <div class="ap-avatar" id="intro-avatar"></div>
+        <div>
+          <div class="ap-name" id="intro-author-name"></div>
+          <div class="ap-genre" id="intro-author-genre"></div>
+          <div class="ap-quirk" id="intro-author-quirk"></div>
+        </div>
+      </div>
+      <div class="greeting" id="intro-greeting"></div>
+      <div class="intro-list-head">この著者へのインタビュー（<span id="intro-count"></span>問）</div>
+      <div class="iv-list" id="intro-list"></div>
+    </div>
+    <div class="intro-btns">
+      <button class="btn big gold" id="btn-start-stage">インタビュー開始！</button>
+      <button class="btn sub" id="btn-intro-memo">本音メモ帳を見る</button>
+    </div>
+  </section>
+
+  <!-- セッション -->
+  <section class="screen" id="screen-session">
+    <div class="session-head">
+      <div class="sh-row">
+        <button class="back-btn" id="btn-quit-session">← やめる</button>
+        <span class="gh-stage" id="session-stage-badge"></span>
+        <span class="gh-topic" id="session-topic"></span>
+        <span class="gh-count" id="session-count"></span>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="session-progress" style="width:0%"></div></div>
+    </div>
+    <div class="session-author" id="session-card">
+      <div class="sa-face" id="session-avatar"></div>
+      <div>
+        <div class="sa-name" id="session-author-name"></div>
+        <div class="sa-int" id="session-author-int"></div>
+      </div>
+    </div>
+    <div class="passage-card">
+      <div class="pc-label">著者の文章</div>
+      <div class="pc-text" id="passage-text"></div>
+    </div>
+    <div id="dialogue-feed"></div>
+    <div id="strategy-slot" style="padding:0 14px;"></div>
+    <div id="input-area"></div>
+    <div id="next-row" style="display:none;">
+      <button class="btn big gold" id="btn-next-interview">次のインタビューへ →</button>
+    </div>
+  </section>
+
+  <!-- 結果 -->
+  <section class="screen" id="screen-result">
+    <div class="topbar">
+      <div class="tb-title">インタビュー結果</div>
+    </div>
+    <div class="result-body">
+      <div class="r-int">総親密度<b id="result-intimacy">0</b></div>
+      <div><span class="title-badge" id="result-rank">通りすがりの読者</span></div>
+      <div class="result-list" id="result-list"></div>
+      <div class="result-btns">
+        <button class="btn big gold" id="btn-result-map">著者ラウンジへ戻る</button>
+        <button class="btn big sub" id="btn-result-memo">本音メモ帳を見る（リベンジ待ち <span id="result-weak">0</span>件）</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 本音メモ帳 -->
+  <section class="screen" id="screen-memo">
+    <div class="topbar">
+      <button class="back-btn" id="btn-memo-back">← 戻る</button>
+      <div class="tb-title">本音メモ帳</div>
+      <button class="sound-toggle" id="sound-toggle-memo">音：オン</button>
+    </div>
+    <div class="memo-body" id="memo-body"></div>
+  </section>
+</div>
+<canvas id="confetti-canvas"></canvas>
+<div id="fx-flash"></div>
+<div id="fx-stamp">本音</div>
+<script>
+"use strict";
+const CHAPTERS = [{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・現代文の基礎","stages":[{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・現代文の基礎","stage_id":"A-1","stage_title":"説明文の「指示語・接続語・要旨」を見抜け","target_level":"高校受験・基礎","author_persona":{"id":"author_kurosawa","name":"黒澤 徹（論理エッセイスト）","genre":"説明文・論説文","quirk":"コーヒーを飲みながら、接続語を読み飛ばす読者にため息をつく気難しいライター","greeting_line":"やあ、インタビュアー君。俺の文章を表面だけなぞって『要するにこういうことですよね』なんて浅いまとめ方をしたら、即帰ってもらうからな。"},"interviews":[{"interview_id":"A1_I01","topic_tag":"指示語「それ」の正確な代入","weakness_category":"auth_shijigo","input_mode":"choice_interpretation","passage_text":"①便利さは人を幸せにすると思われがちだ。②しかし、あらゆる手間が省かれると、人は自分で工夫する喜びまで失ってしまう。③それゆえ、あえて不便を残す設計が見直されているのだ。","user_prompt":"第3文の『それゆえ』の「それ」は、結局何を指しているんですよね？","choices":[{"id":"A","label":"「あらゆる手間が省かれると、工夫する喜びまで失ってしまうこと（②の内容）」ですよね！"},{"id":"B","label":"「便利さが人を幸せにするということ（①の内容）」ですよね！"},{"id":"C","label":"「あえて不便を残す設計（③の後ろ）」ですよね！"}],"rubric":{"canonical_summary":"直前の②の文「あらゆる手間が省かれて工夫する喜びを失ってしまうこと」を指す。","required_points":["直前の逆接「しかし」以降のマイナス面を指している"],"acceptable_keywords":["手間","工夫","喜び","失う"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A1_01A","trigger_keywords_or_choice":["B","C"],"shallow_type":"指示語を直前以外の文と結びつける","author_emotion":"frown_sigh","pushback_line":"はあ…第2文の『しかし』を読み飛ばしたな？便利で幸せなら、なんで『不便を残す設計』が見直されるんだよ。"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"よくぞ気づいた！直前の『工夫する喜びを失うこと』を正確に拾えているな。","secret_honne":"実はな、俺も全自動家電を買いまくった結果、逆に休日にすることがなくなって虚しくなった経験からこの記事を書いたんだよ…。","intimacy_gain":20},"exam_strategy":{"headline":"指示語は「直前の文」を代入して意味が通るか確認","rule":"「それゆえ＝直前の内容が原因となって」なので、②をそのまま代入して③と繋がるか確かめる。","pitfall":"第1文（一般論）に引っ張られて逆の意味を取らないこと。"}},{"interview_id":"A1_I02","topic_tag":"逆接「しかし」と譲歩の区別","weakness_category":"auth_joho","input_mode":"interview_chat","passage_text":"たしかに、短時間で答えを検索できるのは効率的だ。しかし、迷いながら本棚を眺める寄り道の中でこそ、自分の本当に興味のあるテーマに出会えるものだ。","user_prompt":"結局あなたが一番言いたいのは、どういうことですか？自分の言葉でぶつけてみてください。","rubric":{"canonical_summary":"検索の効率性よりも、迷いながら寄り道する時間の中にこそ本当の発見や興味との出会いがあるということ。","required_points":["寄り道・迷う時間の価値","効率検索（譲歩）より大切"],"acceptable_keywords":["寄り道","迷","出会い","本棚","興味","テーマ","しかし"]},"shallow_pushbacks":[{"trap_id":"T_A1_02A","trigger_keywords_or_choice":["検索","効率的","短時間"],"shallow_type":"前半の譲歩を筆者の結論と誤解","author_emotion":"annoyed_glasses","pushback_line":"おいおい、メガネが曇るぜ。『たしかに〜』は俺が一旦認めて見せただけの前置きだ。『しかし』の後ろを読んでくれよ！"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"その通り！『効率』じゃなく『寄り道（セレンディピティ）』の価値をちゃんと受け取ってくれたか！","secret_honne":"本音を言うとね、昔図書館で別の本を探してて偶然手に取った一冊が、俺の人生を変えたんだ。効率ばっかりの世の中にちょっと寂しさを感じててね。","intimacy_gain":25},"exam_strategy":{"headline":"「たしかに〜。しかし〜。」の主役は100%「しかし」の後ろ","rule":"前半は一般論への同意（譲歩）。要約・要旨問題では前半を削り、後半だけを核心にする。","pitfall":"選択肢に前半の内容が大きく書かれていたらダミーを疑う。"}},{"interview_id":"A1_I03","topic_tag":"「つまり」による言い換え・まとめ","weakness_category":"auth_kangen","input_mode":"interview_chat","passage_text":"失敗をすると人は落ち込む。だが、うまくいかないやり方を一つ発見したとも言える。つまり、失敗とは成功へ向かうための貴重なデータ収集なのだ。","user_prompt":"つまり、あなたにとって「失敗」とは何なんですか？一言でぶつけてみて！","rubric":{"canonical_summary":"成功へ向かうための貴重なデータ収集（うまくいかない方法の発見）。","required_points":["成功のためのデータ・情報・学び"],"acceptable_keywords":["データ","成功","発見","情報","材料","ステップ"]},"shallow_pushbacks":[{"trap_id":"T_A1_03A","trigger_keywords_or_choice":["落ち込む","悪いこと","ダメ"],"shallow_type":"第1文の一般論だけでまとめる","author_emotion":"cold_stare","pushback_line":"第1文だけで話を終わらせるなよ。第2文の『だが』と第3文の『つまり』に俺の結論が書いてあるだろう。"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"いい目をしてるな！そう、失敗は落ち込む種じゃなくて『成功のためのデータ』なんだよ。","secret_honne":"実はこの原稿も、編集者に3回ボツにされた後に書き直したやつなんだ。その3回のボツのおかげでこの一文が書けたのさ。","intimacy_gain":20},"exam_strategy":{"headline":"「つまり・すなわち・要するに」の後ろは筆者の公式まとめ","rule":"問題で「どういうことか」と聞かれたら、「つまり」の後ろの表現を軸に解答を作る。","pitfall":"第1文の「通念（世間の常識）」と筆者の意見を混同しないこと。"}},{"interview_id":"A1_I04","topic_tag":"具体例を削って要旨を掴む","weakness_category":"auth_gutairei","input_mode":"choice_interpretation","passage_text":"言葉は時代とともに変化する。例えば、「ら抜き言葉」や「ヤバい」の肯定的な使い方はかつて誤用とされたが、今では広く定着している。言葉の正しさは固定されたものではなく、使う人々の合意で決まるのである。","user_prompt":"この段落の最も重要な主張（メインメッセージ）はどれですか？","choices":[{"id":"A","label":"言葉の正しさは固定ではなく、時代や使う人々の合意によって変化するということですね！"},{"id":"B","label":"若者が「ら抜き言葉」や「ヤバい」をどんどん使うべきだということですね！"},{"id":"C","label":"正しい日本語を守るために変化を禁止すべきだということですね！"}],"rubric":{"canonical_summary":"言葉は時代や使う人々の合意によって変化し、正しさは固定されていない。","required_points":["具体例（ら抜き・ヤバい）を超えた一般論の抽出"],"acceptable_keywords":["変化","合意","固定"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A1_04A","trigger_keywords_or_choice":["B","C"],"shallow_type":"具体例を主張と勘違い・勝手な価値判断の追加","author_emotion":"frown_sigh","pushback_line":"『ら抜き言葉』はただの例え話だよ。あと俺は『使うべき』とも『禁止すべき』とも一言も書いてないぞ。"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"見事だ！具体例に惑わされず、最後の抽象的な結論をしっかり掴んだな。","secret_honne":"正直、最初は俺も『最近の若者の言葉は…』って文句を言う側だったんだ。でも江戸時代の言葉の歴史を調べてたら、昔からずっと変わってるって気づいて恥ずかしくなったんだよな。","intimacy_gain":25},"exam_strategy":{"headline":"具体例（「例えば〜」）は「主張の証拠」にすぎない","rule":"要旨を問う問題では、具体例の固有名詞が入った選択肢よりも抽象度の高いまとめを選ぶ。","pitfall":"「〜すべきだ」など、本文にない筆者の推奨を勝手に付け足した選択肢に注意。"}}]},{"schema_version":"1.0.0","chapter_id":1,"chapter_title":"高校受験・現代文の基礎","stage_id":"A-2","stage_title":"小説・随筆の「情景と心情のサイン」を読み解け","target_level":"高校受験・基礎","author_persona":{"id":"author_shirakawa","name":"白川 結衣（小説家）","genre":"小説・随筆","quirk":"行間に感情を忍ばせるタイプで、言葉の裏に気づかない鈍感な読み手にすぐ拗ねる","greeting_line":"私の小説はね、登場人物に『悲しい！』なんて叫ばせないの。空の色や指先の動きから、本当の気持ちを当ててみて？"},"interviews":[{"interview_id":"A2_I01","topic_tag":"行動描写から読み取る後悔・ためらい","weakness_category":"auth_kodo","input_mode":"interview_chat","passage_text":"「じゃあね」と美咲は明るく手を振った。けれど、改札を通り抜けたあと、一度も振り返らないまま足早に階段を駆け上がり、踊り場でそっとハンカチで目元を押さえた。","user_prompt":"美咲は笑顔で「じゃあね」と言いましたが、本当はどんな気持ちだったんでしょう？","rubric":{"canonical_summary":"別れがつらく悲しくて泣きそうだったが、相手に心配をかけたくない（強がりたい）ので笑顔を作って急いで立ち去った。","required_points":["別れの悲しさ・涙","相手に気づかれたくない・明るく振る舞う"],"acceptable_keywords":["悲し","泣","寂し","つら","強が","見られたくない","心配"]},"shallow_pushbacks":[{"trap_id":"T_A2_01A","trigger_keywords_or_choice":["楽しかった","急いでた","電車に遅れ","花粉症"],"shallow_type":"行動の表面だけ捉えた鈍感読み","author_emotion":"cold_stare","pushback_line":"ちょっと！電車に急いでて目元をハンカチで押さえるわけないでしょ！？『明るく手を振った』【けれど】の後ろを見てよ！"}],"deep_confession":{"author_emotion":"moved_tears","praise_line":"そう…！泣きそうなのを隠して、相手の前では最後まで笑顔でいたかったのよね。","secret_honne":"これね、私が中学の卒業式の日に転校する親友を見送ったときの実体験がモデルなの。改札の向こうまで絶対泣かないって決めてたんだ…。","intimacy_gain":25},"exam_strategy":{"headline":"「セリフ・笑顔」と「その後の隠れた行動」が矛盾したら後者が本音","rule":"「目元を押さえる」「唇を噛む」「視線を落とす」などの仕草が最強の根拠。","pitfall":"「明るく手を振った」だけを見て「楽しそう」と誤読しないこと。"}},{"interview_id":"A2_I02","topic_tag":"情景描写（天気・風景）の効果","weakness_category":"auth_jokei","input_mode":"choice_interpretation","passage_text":"コンクールの結果発表が終わり、名前を呼ばれなかった悠真は楽器ケースを抱えて外に出た。さっきまで眩しかった夕焼けは、いつの間にか灰色の分厚い雲に覆われていた。","user_prompt":"最後の「灰色の分厚い雲に覆われていた」という天気の描写に、どんな意図を込めたんですか？","choices":[{"id":"A","label":"落選した悠真の希望が失われ、重く沈み込んだ絶望的な心情を風景に重ねて際立たせたんですよね！"},{"id":"B","label":"夕方は天気が変わりやすいという気象知識を読者に教えたかったんですよね！"},{"id":"C","label":"これから大雨が降って楽器が濡れる伏線ですよね！"}],"rubric":{"canonical_summary":"落ち込んだ悠真の暗く重い心情を、曇り空の情景に投影して強調している。","required_points":["登場人物の心情の投影・強調"],"acceptable_keywords":["心情","投影","重ね","沈み","絶望"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A2_02A","trigger_keywords_or_choice":["B","C"],"shallow_type":"情景描写を単なる天候情報と誤認","author_emotion":"annoyed_glasses","pushback_line":"私は天気予報士じゃないわよ！『さっきまで眩しかった（期待）』と『灰色の雲（落選後）』の対比に気づいてほしいの。"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"大正解！期待に胸を膨らませていた『眩しい夕焼け』と、落選後の『灰色の雲』のギャップを感じてくれたのね。","secret_honne":"実は吹奏楽部で全国大会に行けなかった日の帰り道、本当に空が真っ暗に見えてね。天気じゃなくて、自分の心のフィルターが空の色を変えてたんだなって後から思ったの。","intimacy_gain":25},"exam_strategy":{"headline":"小説の自然・天候描写は「登場人物の心の鏡」","rule":"「表現の効果」を問われたら「〇〇という主人公の心情を象徴・強調している」と答える。","pitfall":"「ただの時刻・天候の説明」とする選択肢は即除外する。"}},{"interview_id":"A2_I03","topic_tag":"対話における心情の変化（きっかけの特定）","weakness_category":"auth_henka","input_mode":"interview_chat","passage_text":"ずっと口うるさいと思っていた祖母の手を、転びそうになった拍子に思わず掴んだ。その手は驚くほど小さく、カサカサに乾いて軽かった。健太は何も言えず、そのまま祖母の歩幅に合わせてゆっくり歩き出した。","user_prompt":"健太の祖母に対する気持ちが変化した「決定的なきっかけ」と「変化後の心情」を当ててみて！","rubric":{"canonical_summary":"祖母の小さく乾いて軽い手に触れたことをきっかけに、祖母の老いを実感し、これまでの反発から労わりや優しさ（歩幅を合わせる気遣い）へと変わった。","required_points":["手に触れて老い・小ささを実感したきっかけ","反発から労わり・思いやり・愛おしさへの変化"],"acceptable_keywords":["手","老い","小さ","労わ","優し","思いやり","気遣"]},"shallow_pushbacks":[{"trap_id":"T_A2_03A","trigger_keywords_or_choice":["歩くのが遅くてイライラ","嫌いなまま"],"shallow_type":"変化後の行動（歩幅を合わせた）の誤読","author_emotion":"frown_sigh","pushback_line":"イライラしてたら『ゆっくり歩幅を合わせる』わけないでしょ？『小さく、乾いて軽かった』という触覚の描写が何に気づかせたか考えてみて。"}],"deep_confession":{"author_emotion":"moved_tears","praise_line":"よく読み取ってくれたわ…。『口うるさい強いおばあちゃん』が、実はこんなに小さく老いていたんだって気づいた瞬間なのよね。","secret_honne":"大人になると急に親や祖父母の手が小さく感じられる瞬間があるの。言葉じゃなくて『歩幅を合わせる』っていう行動に優しさを込めたんだよ。","intimacy_gain":30},"exam_strategy":{"headline":"心情変化＝「以前（反発）」→「きっかけ（触れ合い・気づき）」→「変化後（労わり）」","rule":"「何も言えず〜ゆっくり歩き出した」のように、無言の優しい行動が変化後の心情を示す。","pitfall":"「なぜ歩幅を合わせたか」に「手が小さかったから」と物理理由だけ書かないこと（老いへの気づき・思いやりまで書く）。"}}]}]},{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"評論文・完全攻略（共通テスト〜難関大）","stages":[{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"評論文・完全攻略（共通テスト〜難関大）","stage_id":"A-3","stage_title":"近代批判・科学技術・AI論の論点","target_level":"大学受験・共通テスト（文理共通）","author_persona":{"id":"author_takahashi","name":"高橋 龍之介（科学哲学者）","genre":"科学論・技術論","quirk":"「科学は万能だ」「AIは悪だ」みたいな単純な二元論が大嫌いで、複雑な構造を見抜かないとすぐ渋い顔をする","greeting_line":"こんにちは。理系も文系も、俺の科学技術論を『技術＝善』か『技術＝悪』かの二択で読んだら終わりだぞ。本質をぶつけてきな。"},"interviews":[{"interview_id":"A3_I01","topic_tag":"近代科学の「客観性」と「主観の切り捨て」","weakness_category":"auth_science_critique","input_mode":"interview_chat","passage_text":"近代科学は、誰が測っても同じ数値になる「客観性」を武器に自然を解明してきた。だがその裏で、数値化できない個人の痛みや風景の美しさといった「主観的意味」を非科学的なものとして切り捨ててきたのである。","user_prompt":"あなたは近代科学を全否定しているわけではないですよね？何が問題だと主張したいんですか？","rubric":{"canonical_summary":"科学の客観性の成果は認めつつも、数値化できない主観的な価値や意味を切り捨ててしまう限界・偏りが問題だと言いたい。","required_points":["客観性の力（成果）は認めている","数値化できない主観・意味の切り捨てが問題"],"acceptable_keywords":["数値","主観","切り捨て","客観","限界","痛み","意味"]},"shallow_pushbacks":[{"trap_id":"T_A3_01A","trigger_keywords_or_choice":["科学をなくせ","全部悪い","科学は最高"],"shallow_type":"両極端な0か100かの誤読","author_emotion":"annoyed_glasses","pushback_line":"ちょっと待て、俺は『科学を捨てろ』なんて一言も書いてないぞ！『自然を解明してきた』という強みの裏にある『見落とし』を指摘してるんだ。"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"よくぞ気づいた！科学の成果を認めた上で、『測定できないもの』の価値を問い直したかったんだ。","secret_honne":"実は俺、元々はバリバリの物理学の研究者だったんだよ。でも実験室でデータを取るほど、数字に表れない人間の心や暮らしの豊かさに惹かれて哲学に移ったんだよね。","intimacy_gain":25},"exam_strategy":{"headline":"評論文の近代批判＝「科学・効率の功績は認めつつ、切り捨てた人間性・主観を補う」","rule":"「科学を全面否定する」選択肢は大学入試ではほぼ100%不正解のダミー。","pitfall":"「だがその裏で」の後ろの「主観的意味の切り捨て」を落とさないこと。"}},{"interview_id":"A3_I02","topic_tag":"比喩「ブラックボックス化」の言い換え","weakness_category":"auth_blackbox","input_mode":"choice_interpretation","passage_text":"AIが高度化するほど、なぜその答えが出たのか人間には理解できない「ブラックボックス化」が進む。それは便利さと引き換えに、私たちが判断の責任を手放すことでもあるのだ。","user_prompt":"あなたが言う「ブラックボックス化」とは、具体的にどういう危険を指していますか？","choices":[{"id":"A","label":"判断の根拠や仕組みが見えなくなり、人間が自ら検証して責任を負うことができなくなる危険ですよね！"},{"id":"B","label":"パソコンやサーバーのケースが黒いデザインばかりになることですよね！"},{"id":"C","label":"AIが勝手に電源を切って動かなくなることですよね！"}],"rubric":{"canonical_summary":"AIの導き出した結論のプロセス・根拠が人間には見えず、判断の責任をAI任せにしてしまう問題。","required_points":["仕組み・根拠が見えない","判断の責任を手放す"],"acceptable_keywords":["根拠","仕組み","責任","わからない"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A3_02A","trigger_keywords_or_choice":["B","C"],"shallow_type":"専門用語・比喩の誤解","author_emotion":"frown_sigh","pushback_line":"黒い箱のデザインの話をしてるわけないだろう…。第1文の『なぜその答えが出たのか理解できない』と第2文の『責任を手放す』を繋げてくれ。"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"その通り。仕組みがわからないまま『AIが言ったから』と丸投げする怖さを伝えたかったんだ。","secret_honne":"ぶっちゃけね、俺自身もスマホの予測変換に頼りすぎて漢字が書けなくなってるのを自覚して、ゾッとしてこの章を書いたんだよ。","intimacy_gain":25},"exam_strategy":{"headline":"評論文のカタカナ語・比喩＝「直前の『〜』という定義＋直後の『それは〜』という言い換え」を合体","rule":"「ブラックボックス化」の前と後ろにある説明を繋ぐだけで完全な解答になる。","pitfall":"カタカナ語の意味を知っていても、必ず本文中の文脈に合わせて答えること。"}},{"interview_id":"A3_I03","topic_tag":"パラダイムシフト（常識の相対化）","weakness_category":"auth_paradigm","input_mode":"interview_chat","passage_text":"ある時代の科学者が「絶対に正しい」と信じる枠組み（パラダイム）も、歴史を振り返れば次の時代には塗り替えられてきた。だからこそ私たちは、現在の常識を絶対視せず「相対化」する視点を持たねばならない。","user_prompt":"最後の「現在の常識を相対化する」とは、どういう態度をとることなんですか？","rubric":{"canonical_summary":"今の常識を唯一の絶対的な真理と思い込まず、別の視点や歴史的文脈と比べながら疑い・問い直す態度。","required_points":["絶対視しない（唯一だと思い込まない）","他の枠組み・視点と比べて見直す"],"acceptable_keywords":["絶対","別の視点","疑","比べ","問い直","他","見直"]},"shallow_pushbacks":[{"trap_id":"T_A3_03A","trigger_keywords_or_choice":["何も信じない","全部嘘","昔のほうが正しい"],"shallow_type":"「相対化」を「全否定・懐疑主義」と混同","author_emotion":"cold_stare","pushback_line":"いや『すべて嘘だ』とひねくれろと言ってるんじゃない。『今の見方も数ある見方の1つに過ぎない』と距離を取って客観視しろってことだ。"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"素晴らしい理解力だ！『絶対視せず、別の枠組みからも見直す』——それが知性の核心なんだ。","secret_honne":"昔の教科書には『絶対に変わらない事実』として書かれてたことが10年後に覆るのを何度も見てきたからね。だからこそ、若い世代には柔らかい頭を持ってほしいんだ。","intimacy_gain":30},"exam_strategy":{"headline":"「相対化」＝「絶対視せず、他と比較して距離をとって見直すこと」","rule":"現代文最重要キーワードの1つ。「絶対化・固定化」の対義語として使われる。","pitfall":"「相対化＝完全に否定すること」と極端に訳さないように注意。"}}]},{"schema_version":"1.0.0","chapter_id":2,"chapter_title":"評論文・完全攻略（共通テスト〜難関大）","stage_id":"A-4","stage_title":"文化・言語・他者論（文系・難関大頻出）","target_level":"大学受験・理系/文系二次・難関大","author_persona":{"id":"author_minakami","name":"水上 紗季（文化人類学者・哲学者）","genre":"言語論・他者論","quirk":"「分かり合えるのが当たり前」という甘い前提をバッサリ斬るクールな女性研究者","greeting_line":"ようこそ。難関大の現代文でよく出る『他者』や『言葉の限界』のテーマよ。浅い綺麗事をぶつけてきたら容赦なく論破するわよ。"},"interviews":[{"interview_id":"A4_I01","topic_tag":"言葉による世界の切り分け（分節化）","weakness_category":"auth_language_bunsetsu","input_mode":"interview_chat","passage_text":"世界にはもともと「虹の7色」という境界線が引かれているわけではない。言語が連続した光のグラデーションを単語によって切り分ける（分節化する）ことで、初めて私たちは「赤」や「青」を区別して認識できるのである。","user_prompt":"結局、あなたにとって「言葉」と「世界の認識」はどんな関係にあるんですか？","rubric":{"canonical_summary":"最初からモノや境界があるのではなく、言葉が世界を切り分けることで初めて私たちが対象を区別・認識できるようになる。","required_points":["言葉が世界を切り分ける（境界を引く）","それによって初めて認識できる"],"acceptable_keywords":["切り分け","境界","認識","区別","最初","言語"]},"shallow_pushbacks":[{"trap_id":"T_A4_01A","trigger_keywords_or_choice":["言葉は名前を付けるだけ","もともと7色ある"],"shallow_type":"素朴実在論（先にモノがあって名前を付ける）という逆転","author_emotion":"cold_stare","pushback_line":"それじゃ私の言ってることと真逆よ！『もともと境界線が引かれているわけではない』って1行目に書いてあるでしょ？言葉のほうが先に網をかけるの！"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"完璧！ソシュール言語学の核心『言葉が世界を切り分けることで認識が生まれる』を正確に掴んだわね。","secret_honne":"実はね、英語を学んだときに日本語の『青信号』が『green』と呼ばれてるのを知って、言葉が色の境界まで決めてるんだって衝撃を受けたのが研究の原点なの。","intimacy_gain":30},"exam_strategy":{"headline":"言語論の鉄板テーマ：「モノが先ではなく、言葉（分節化）が境界を作る」","rule":"共通テスト・難関大ともに「言語は単なる道具・ラベルではない」という逆説が頻出。","pitfall":"「あらかじめ分かれているものに名前を貼る」という常識的な選択肢に騙されないこと。"}},{"interview_id":"A4_I02","topic_tag":"「他者」と「異質性」の受け入れ","weakness_category":"auth_tasha","input_mode":"choice_interpretation","passage_text":"相手を「自分と同じ気持ちのはずだ」と勝手に理解した気になるのは、真の対話ではなく自己の投影に過ぎない。真のコミュニケーションとは、相手がどこまで行っても理解しきれない「他者」であることを引き受けることから始まる。","user_prompt":"先生が言う「真のコミュニケーション」の出発点とは、結局どういうことですか？","choices":[{"id":"A","label":"「相手は自分とは異なり、完全には理解しきれない存在だ」という異質性を認めた上で向き合うことですよね！"},{"id":"B","label":"相手と自分が100%同じ考えになるまで話し合って同化させることですよね！"},{"id":"C","label":"どうせ他人とは分かり合えないから会話するのを諦めることですよね！"}],"rubric":{"canonical_summary":"相手を自分と同じだと決めつけず、理解しきれない異質な「他者」として認めることから対話が始まる。","required_points":["理解しきれない他者（異質性）の承認","そこから対話が始まる（諦めではない）"],"acceptable_keywords":["異質","理解しきれない","他者","認め"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A4_02A","trigger_keywords_or_choice":["B","C"],"shallow_type":"他者の同化、またはコミュニケーション放棄との混同","author_emotion":"annoyed_glasses","pushback_line":"『同じになる』のは自己の投影だし、『諦める』のも違うわ。『そこから始まる』って書いてあるでしょ！"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"よくぞそこまで読み込んだわね。『分かり合えない部分があるからこそ、対話が必要になる』という逆説よ。","secret_honne":"一番近い家族や恋人にほど『言わなくてもわかってよ』って期待してケンカになるじゃない？あれも相手を自分の分身だと思い込んでるから起きるのよね…私もよくやらかすわ。","intimacy_gain":30},"exam_strategy":{"headline":"現代文の「他者」＝「自分の思い通りにならない、異質な存在」","rule":"「完全に分かり合える」ではなく「ズレや理解不可能性を前提に対話を続ける」が難関大の正解パターン。","pitfall":"「どうせ分かり合えないので無意味だ」というニヒリズム選択肢はバツ。"}},{"interview_id":"A4_I03","topic_tag":"自文化中心主義（エスノセントリズム）の克服","weakness_category":"auth_ethnocentrism","input_mode":"interview_chat","passage_text":"異文化を前にして「遅れている」とか「野蛮だ」と評価するのは、無意識に自国の基準を絶対のものさしにしているからだ。文化に優劣はなく、それぞれの環境に適応した固有の合理性があるのである。","user_prompt":"異文化を見るときに私たちが陥りがちな罠と、本来とるべき姿勢を教えてください！","rubric":{"canonical_summary":"自国の文化や基準を絶対視して他文化に優劣をつける（自文化中心主義）のではなく、各文化がそれぞれの環境に根ざした独自の合理性を持つと対等に理解すべき。","required_points":["自文化の基準を絶対視する罠","優劣はなく各々の合理性があると認める姿勢（文化相対主義）"],"acceptable_keywords":["基準","絶対","優劣","合理性","環境","自文化","対等"]},"shallow_pushbacks":[{"trap_id":"T_A4_03A","trigger_keywords_or_choice":["日本が一番","進んでいる国が正しい"],"shallow_type":"自文化中心主義の罠にそのままハマる","author_emotion":"cold_stare","pushback_line":"まさに今あなたが陥ってるのが『自分のものさしを絶対にする罠』よ！『文化に優劣はない』と書いてあるでしょう。"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"完璧よ！自分の『当たり前』を外して、相手の土地や歴史なりの合理性を見抜く『文化相対主義』そのものね。","secret_honne":"昔、砂漠の遊牧民の村に調査に行ったとき、水で手を洗わないのを見て最初は驚いたの。でも限られた水を命のために守る合理的な知恵だと知って、自分の無知を恥じたわ。","intimacy_gain":25},"exam_strategy":{"headline":"文化人類学の基本対立：「自文化中心主義（×）」vs「文化相対主義（◎）」","rule":"「遅れている・進んでいる」という単線的な発展観を批判するのが評論文の定番。","pitfall":"「どんな習慣も表面的に真似すべき」ではなく「背景にある合理性を理解する」が正解。"}}]}]},{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"小説・詩歌・表現分析（共通テスト〜難関大）","stages":[{"schema_version":"1.0.0","chapter_id":3,"chapter_title":"小説・詩歌・表現分析（共通テスト〜難関大）","stage_id":"A-5","stage_title":"純文学の「言葉の裏と曖昧な感情」のインタビュー","target_level":"大学受験・共通テスト（文理共通）","author_persona":{"id":"author_saeki","name":"冴木 蓮（純文学作家）","genre":"現代小説・文学","quirk":"人間の矛盾した感情を描くのが得意で、登場人物を『いい人・悪い人』と単純に決めつけると不機嫌になる","greeting_line":"やあ。小説の登場人物はいつも1つの気持ちだけで動いているわけじゃない。嬉しいのに悔しい、好きだけど憎い…その揺れを当ててみなよ。"},"interviews":[{"interview_id":"A5_I01","topic_tag":"アンビバレント（相反する2つの感情）","weakness_category":"auth_ambivalent","input_mode":"interview_chat","passage_text":"ライバルだった陽介が全国大会の切符を掴んだ瞬間、俺は「おめでとう、さすがだな」と握手を求めた。だが、陽介の嬉しそうな横顔を見ているうちに、急に喉が渇いて、それ以上言葉が出てこなくなった。","user_prompt":"主人公（俺）は陽介の合格を祝いたかったのか、それとも悔しかったのか、本当の本音はどうなんですか？","rubric":{"canonical_summary":"努力を認めて祝福したい気持ちと、自分が負けた悔しさ・嫉妬や惨めさの2つの相反する感情が同時にせめぎ合っている。","required_points":["祝福・尊敬の気持ち（両方ある）","悔しさ・嫉妬・惨めさで耐えられなくなった"],"acceptable_keywords":["両方","祝福","おめでとう","悔し","嫉妬","複雑","矛盾"]},"shallow_pushbacks":[{"trap_id":"T_A5_01A","trigger_keywords_or_choice":["祝福だけ","嘘をついてる","嫌い"],"shallow_type":"どちらか片方の感情だけで割り切る","author_emotion":"frown_sigh","pushback_line":"どっちか1つに決めつけるなよ！心から祝いたい気持ちだって嘘じゃないのに、同時に悔しさがこみ上げてきたから苦しいんじゃないか。"}],"deep_confession":{"author_emotion":"moved_tears","praise_line":"その通りだよ…。『祝いたい自分』と『嫉妬するみっともない自分』の両方が本物なんだ。","secret_honne":"俺も小説の新人賞で友達が大賞を獲ったとき、会場で拍手しながらトイレに駆け込んで泣いたことがある。あの『喉が渇く感じ』は嘘じゃないんだよな。","intimacy_gain":30},"exam_strategy":{"headline":"小説の心情は「A（建前・表の感情）しつつも、B（裏の感情）が拭えない」の2階建て","rule":"「嬉しい」「悲しい」の1色だけで書かれた選択肢より、葛藤や複雑な揺れを含む選択肢・記述を選ぶ。","pitfall":"「本当は祝う気など一切なかった」のような極端な切り捨てに注意。"}},{"interview_id":"A5_I02","topic_tag":"反語的セリフ（「ばかだなあ」）","weakness_category":"auth_gyakuten_serif","input_mode":"choice_interpretation","passage_text":"大雨の中、ずぶ濡れになって俺の忘れ物を駅まで届けてくれた弟を見て、俺は思わず「ほんとに、ばかだなあ」と小さく笑った。","user_prompt":"この「ばかだなあ」というセリフ、どんな気持ちを込めて書かれたんですか？","choices":[{"id":"A","label":"無茶をした弟に呆れつつも、自分のための行動に対する深い感謝と愛おしさを照れ隠しに込めたんですよね！"},{"id":"B","label":"傘も差さずに走ってくる弟の判断力のなさを本気でバカにして軽蔑したんですよね！"}],"rubric":{"canonical_summary":"呆れつつも弟の優しさへの感謝と愛おしさを照れ隠しで表した言葉。","required_points":["呆れ＋感謝・愛おしさ（照れ隠し）"],"acceptable_keywords":["感謝","愛おし","照れ"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A5_02A","trigger_keywords_or_choice":["B"],"shallow_type":"言葉の文字面をそのまま受け取る","author_emotion":"annoyed_glasses","pushback_line":"後ろの『小さく笑った』を見てくれよ！軽蔑してたら優しい笑顔になるわけがないだろう。"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"そう、照れくさくて『ありがとう』と素直に言えない兄貴の精一杯の愛情だよ。","secret_honne":"俺の兄貴も昔そうだったんだ。無口で褒めてくれないくせに、俺が受験の朝にカイロをそっと靴箱に入れて『忘れんなよ、バカ』って言ってくれたんだよね。","intimacy_gain":25},"exam_strategy":{"headline":"マイナス言葉（「バカ」「うるさい」）× 温かい文脈 ＝ 親愛・照れ隠し","rule":"セリフの単語だけで感情を判断せず、直前・直後の表情描写（笑う・目を細める）とセットで読む。","pitfall":"文字通りの「侮辱・怒り」とするひっかけ選択肢に要注意。"}},{"interview_id":"A5_I03","topic_tag":"語り手の視点（三人称限定視点）の効果","weakness_category":"auth_narrative_pov","input_mode":"choice_interpretation","passage_text":"（小説全体が主人公・紗枝の目線からのみ語られ、隣に座る父が何を考えているかは一切説明されず、ただ黙って茶をすする背中だけが描かれている。）","user_prompt":"なぜあえて「お父さんの心の中」を書かずに、紗枝の目線だけから描いたんですか？","choices":[{"id":"A","label":"読者が紗枝に感情移入しやすくなるとともに、父の本心がわからないもどかしさや距離感をリアルに伝えるためですよね！"},{"id":"B","label":"お父さんのキャラクター設定を思いつくのが面倒だったからですよね！"}],"rubric":{"canonical_summary":"主人公への感情移入を高め、他者の内面が直接わからないことによる緊張感や距離感を際立たせる効果。","required_points":["主人公への感情移入","他者の心理がわからない距離感・謎"],"acceptable_keywords":["感情移入","距離","わからない"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A5_03A","trigger_keywords_or_choice":["B"],"shallow_type":"表現技法の意図を無視","author_emotion":"cold_stare","pushback_line":"作家をサボり扱いするなよ！現実でも他人の頭の中は見えないだろ？それを文章のカメラワークで再現してるんだ。"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"見事な分析だ！語らない（書かない）こと自体が、親子の距離感や緊張感を表現しているんだよ。","secret_honne":"小説ってね、全部を言葉で説明しちゃうと安っぽくなるんだ。読者の想像に余白を残すために、あえて父親のモノローグを全部削ったんだよ。","intimacy_gain":25},"exam_strategy":{"headline":"共通テスト小説・表現分析：「誰の視点か」「なぜ回想・省略を入れたか」","rule":"一元視点（特定人物寄り）＝感情移入＋他者への不透明さ（緊張・すれ違い）を生む。","pitfall":"「作者の都合」や「字数稼ぎ」といったメタ視点の選択肢はあり得ない。"}},{"interview_id":"A5_I04","topic_tag":"象徴物（モチーフ）の変化による心情表現","weakness_category":"auth_motif","input_mode":"interview_chat","passage_text":"（冒頭では「重くて不格好な古い木箱」と疎ましく思っていた祖父の道具箱を、物語の最後で主人公は「滑らかな木肌の温もりを持つ宝物」と見つめ直していた。）","user_prompt":"同じ「古い木箱」なのに、最初と最後で書き方をガラッと変えたのはなぜですか？","rubric":{"canonical_summary":"木箱自体の物理的性質は変わっていないが、主人公が祖父への理解や愛情を深めたことで、主人公の内面の変化が対象の見え方の変化として表れている。","required_points":["木箱が変わったのではなく主人公の心情・見方が変わった","祖父への理解・愛情・敬意"],"acceptable_keywords":["見方","心情","変化","愛","理解","敬意","温もり"]},"shallow_pushbacks":[{"trap_id":"T_A5_04A","trigger_keywords_or_choice":["磨いた","新品を買った","箱が変わった"],"shallow_type":"対象の物理的変化と誤認","author_emotion":"frown_sigh","pushback_line":"DIYでリフォームしたわけじゃないぞ！箱は最初から同じ木箱だ。変わったのは箱じゃなくて『誰の心』だい？"}],"deep_confession":{"author_emotion":"moved_tears","praise_line":"その通り！対象そのものは何も変わっていないのに、見ている主人公の心が温まったから、同じ木箱が美しく見えたんだ。","secret_honne":"同じモノの描写を最初と最後で対比させるのは、小説を書くときの一番好きな仕掛けなんだ。気づいてくれて嬉しいよ。","intimacy_gain":30},"exam_strategy":{"headline":"同じモノ・風景の描写が最初と最後で変わったら「主人公の心情変化の証拠」","rule":"小説で冒頭と結末に同じアイテム（時計・靴・風景）が再登場したら100%設問に絡む。","pitfall":"「対象物自体が修理された」のような物理的誤読を避けること。"}}]}]},{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"共通テスト複数資料＆二次記述突破","stages":[{"schema_version":"1.0.0","chapter_id":4,"chapter_title":"共通テスト複数資料＆二次記述突破","stage_id":"A-6","stage_title":"共通テスト・複数テキスト統合＆二次論述バトル","target_level":"大学受験・理系/文系二次・難関大","author_persona":{"id":"author_exam_panel","name":"九条 教授（入試問題作問委員長）","genre":"複数資料統合・難関大記述","quirk":"共通テストの資料統合から東大・京大級の記述要旨まで、1要素の抜けも許さないラスボス著者","greeting_line":"よくここまで辿り着いたな。最後は『複数の文章の比較統合』と『二次試験の記述要約』だ。君の読解が本物なら、採点基準の裏話まで全部明かしてやろう。"},"interviews":[{"interview_id":"A6_I01","topic_tag":"複数テキストの比較統合（共通テスト型）","weakness_category":"auth_multi_text","input_mode":"choice_interpretation","passage_text":"【文章A】「オンライン授業は移動時間がなく効率的だが、画面越しでは空気感や雑談からの偶然の発想が生まれにくい。」\n【文章B】「対面授業でも一方的な講義では受け身になるが、オンラインでもチャットや小グループ議論を活用すれば活発な意見交換が可能だ。」","user_prompt":"先生、文章Aと文章Bの2人の著者を並べてインタビューすると、結局2人の共通の論点（核心）は何ですか？","choices":[{"id":"A","label":"形式（オンラインか対面か）そのものではなく、「双方向性や偶然の対話が生まれる場になっているか」という学びの質が重要だということですよね！"},{"id":"B","label":"文章Aはオンライン反対、文章Bはオンライン賛成なので完全に意見が対立して噛み合っていないということですよね！"}],"rubric":{"canonical_summary":"対面かオンラインかという形式の違いではなく、双方向的な対話や主体的な発想が生まれる仕組みになっているかが重要だという点。","required_points":["形式（対面vsオンライン）を超えた統合","双方向性・対話・主体性の重要性"],"acceptable_keywords":["形式","対話","双方向","質","発想"],"choice_id":"A"},"shallow_pushbacks":[{"trap_id":"T_A6_01A","trigger_keywords_or_choice":["B"],"shallow_type":"2つの文章を単純な賛成vs反対の対立に矮小化","author_emotion":"annoyed_glasses","pushback_line":"浅いな！文章Bは『対面でも一方的ならダメ、オンラインでも工夫すれば議論できる』と言ってるだろ？単純な賛否二択に落とすな！"}],"deep_confession":{"author_emotion":"excited_lean_in","praise_line":"見事だ！共通テストの複数文章問題で一番問われる『2つの文章を一段高い視点で統合する力』が完全に身についているな。","secret_honne":"作問会議ではね、わざと『一見すると賛成と反対に見える2本の文章』を並べて、実は同じ本質を別の角度から語ってることに気づける受験生を見抜くんだよ。","intimacy_gain":30},"exam_strategy":{"headline":"複数資料統合：「AとBの単純な賛否」ではなく「両者を貫く上位の視点」を探す","rule":"「オンラインでも対面でも〇〇が大事」のように形式を超えた条件を見つけるのが正解パターン。","pitfall":"片方の文章の主張だけで他方を否定する選択肢は選ばないこと。"}},{"interview_id":"A6_I02","topic_tag":"難関大・対比を含む理由説明記述","weakness_category":"auth_essay_contrast","input_mode":"interview_chat","passage_text":"過去の歴史を「暗記すべき年号の羅列」として学ぶと、現代とのつながりが見えず退屈なものになる。だが、当時の人々が直面した葛藤や選択の理由を追体験するとき、歴史は現代を照らす鏡へと変わるのである。","user_prompt":"問：なぜ筆者は「歴史が現代を照らす鏡へと変わる」と言うのか？「暗記」との対比を必ず入れて50字前後でぶつけてみてください！","rubric":{"canonical_summary":"単なる年号の暗記とは異なり、当時の人々の葛藤や選択の理由を追体験することで、現代とのつながりが見えてくるから。","required_points":["年号の暗記との対比","当時の人々の葛藤・選択の追体験","現代とのつながり（文末「〜から。」）"],"acceptable_keywords":["暗記","異な","葛藤","選択","追体験","つながり","から"]},"shallow_pushbacks":[{"trap_id":"T_A6_02A","trigger_keywords_or_choice":["昔のことを学ぶから","鏡だから"],"shallow_type":"対比要素・具体的理由の欠如","author_emotion":"frown_sigh","pushback_line":"それじゃ10点中2点だな。『暗記との対比』も『人々の葛藤の追体験』も『文末の〜から』も抜けてるぞ。本文のパーツを全部拾え！"}],"deep_confession":{"author_emotion":"impressed_smile","praise_line":"完璧だ！『暗記とは異なり（対比）』＋『当時の葛藤や選択を追体験（原因）』＋『現代とのつながりが見えるから（帰結）』、文句なしの満点答案だ！","secret_honne":"記述の採点ってね、実は『①対比が入ってるか(+3点) ②追体験の要素(+4点) ③現代との接続と文末呼応(+3点)』みたいにパーツごとの加点方式なんだよ。全パーツを1文に詰め込んだ君の勝ちだ！","intimacy_gain":35},"exam_strategy":{"headline":"難関大記述の採点＝「必須要素パーツの加点方式」＋「文末呼応」","rule":"「対比して説明せよ」なら「Aとは異なり、Bであるから。」の型を必ず使う。","pitfall":"比喩（現代を照らす鏡）をそのまま答えに写さず「現代の問題を考える手がかりになる」と言い換えるとさらに高得点。"}},{"interview_id":"A6_I03","topic_tag":"難関大・全体要旨の要約インタビュー","weakness_category":"auth_final_summary","input_mode":"interview_chat","passage_text":"民主主義とは、常に全員が賛成する理想郷ではない。むしろ、意見の異なる他者との摩擦や時間のかかる議論を面倒がらずに引き受け、暫定的な合意を何度も作り直していく「終わりのないプロセス」そのものなのである。","user_prompt":"最終テストだ！結局あなたがこの文章全体で一番伝えたい「民主主義の本質」を自分の言葉でぶつけてみろ！","rubric":{"canonical_summary":"全員一致の理想ではなく、意見の異なる他者との摩擦や議論を引き受けながら、暫定的な合意を何度も作り直し続ける終わりのないプロセスであるということ。","required_points":["全員一致ではない","異なる他者との摩擦・議論を引き受ける","合意を作り直し続けるプロセス"],"acceptable_keywords":["異なる","他者","摩擦","議論","合意","作り直","プロセス","過程"]},"shallow_pushbacks":[{"trap_id":"T_A6_03A","trigger_keywords_or_choice":["みんなで仲良く","多数決","理想郷"],"shallow_type":"筆者が否定した「全員一致の理想郷」でまとめるミス","author_emotion":"cold_stare","pushback_line":"1文目に『理想郷ではない』と書いたはずだぞ！意見がぶつかる面倒くささや摩擦から逃げないことこそが民主主義なんだ！"}],"deep_confession":{"author_emotion":"moved_tears","praise_line":"素晴らしい…！『全員一致の完成品ではなく、異なる他者と摩擦しながら合意を作り直し続けるプロセス』——俺が伝えたかったすべてを射抜いたな！！","secret_honne":"実はな、俺も昔は『話し合えばみんな同じ意見になれる』と思ってたんだよ。でも違うからこそ何度も議論し直せる仕組みが尊いんだと気づいたんだ。全ステージ制覇、本当におめでとう！君ならどの大学の現代文も突破できるぞ！","intimacy_gain":50},"exam_strategy":{"headline":"現代文の到達点：著者の「否定したい常識」と「逆説的な本質」を対比で掴む","rule":"本文の「〜ではない。むしろ〜である」の構文は、そのまま要約の骨格になる。","pitfall":"自分の持っている綺麗事（「みんなで仲良く一致する」）で本文を上書きしないこと！"}}]}]}];
+</script>
+<script>
+/* === LOGIC START === */
+const HonneLogic = (() => {
+// テキスト正規化：空白・句読点・記号を除去し、カタカナをひらがなへ寄せる（ツッコミ漫才・後輩育成ジムと同一方式）
+function normalizeText(s) {
+  if (s == null) return "";
+  let t = String(s);
+  t = t.replace(/[ァ-ヶ]/g, (c) => String.fromCharCode(c.charCodeAt(0) - 0x60));
+  t = t.replace(/[\s　、。，．・：；「」『』（）()［］<>＜＞!?！？〜~～…‥"”'’`｜|/／\-ー―_]/g, "");
+  return t.toLowerCase();
+}
+
+// required_points を判定材料の断片に分解する：（注記）を外し、・や読点で割る
+function pointFragments(interview) {
+  const out = [];
+  for (const p of interview.rubric?.required_points || []) {
+    const stripped = String(p).replace(/（[^）]*）/g, "").replace(/\([^)]*\)/g, "");
+    for (const frag of stripped.split(/[・、,／/]/)) {
+      const n = normalizeText(frag);
+      if (n) out.push(n);
+    }
+  }
+  return out;
+}
+
+// 判定に使うキーワード：acceptable_keywords と required_points の断片を合わせ、
+// 正規化＋重複除去し、1文字だけの汎用語は（他に候補がある場合）除外する
+function usableKeywords(interview) {
+  const raw = [...new Set([
+    ...(interview.rubric?.acceptable_keywords || []).map(normalizeText),
+    ...pointFragments(interview),
+  ].filter(Boolean))];
+  const long = raw.filter((a) => a.length >= 2);
+  return long.length ? long : raw;
+}
+// 自由記述の正解しきい値：使えるキーワードが2種以下なら1種、3種以上なら2種の充足を要求
+function freeNeed(interview) {
+  return usableKeywords(interview).length <= 2 ? 1 : 2;
+}
+
+// 自由記述のトラップ照合（トラップ優先。ただし誤爆防止ガード2種つき）
+// ガード1：trigger を内包する acceptable キーワードが入力に含まれていれば、その trigger は除外（前2作の方式）
+// ガード2：trigger と無関係な核心キーワードだけですでに正解しきい値に達している入力は、
+//         汎用的な trigger 語（例：「検索」）の混入で上書きしない
+function matchTrapByText(interview, normalizedInput) {
+  const acceptN = usableKeywords(interview);
+  const need = freeNeed(interview);
+  for (const trap of interview.shallow_pushbacks || []) {
+    for (const trig of trap.trigger_keywords_or_choice || []) {
+      const tn = normalizeText(trig);
+      if (!tn) continue;
+      if (!normalizedInput.includes(tn)) continue;
+      if (acceptN.some((a) => a.includes(tn) && normalizedInput.includes(a))) continue;
+      const independentHits = acceptN.filter((a) => !a.includes(tn) && normalizedInput.includes(a)).length;
+      if (independentHits >= need) continue;
+      return trap;
+    }
+  }
+  return null;
+}
+
+function judgeFreeText(interview, input) {
+  const n = normalizeText(input);
+  if (!n) return { result: "fallback", trap: null };
+  const trap = matchTrapByText(interview, n);
+  if (trap) return { result: "trap", trap };
+  const hits = usableKeywords(interview).filter((a) => n.includes(a)).length;
+  if (hits >= freeNeed(interview)) return { result: "correct", trap: null, hits };
+  return { result: "fallback", trap: null, hits };
+}
+
+function findChoice(interview, choiceId) {
+  return (interview.choices || []).find((c) => c.id === choiceId) || null;
+}
+
+// 選択式のトラップ照合：trigger に選択肢IDかラベルが含まれていればそのトラップ
+function matchTrapByChoice(interview, choiceId) {
+  const ch = findChoice(interview, choiceId);
+  const labelN = ch ? normalizeText(ch.label) : "";
+  for (const trap of interview.shallow_pushbacks || []) {
+    for (const trig of trap.trigger_keywords_or_choice || []) {
+      if (trig === choiceId) return trap;
+      const tn = normalizeText(trig);
+      if (tn && labelN && tn === labelN) return trap;
+    }
+  }
+  return null;
+}
+
+function judgeChoice(interview, choiceId) {
+  // トラップ照合を正解判定より優先する（指令書・前2作の方式）
+  const trap = matchTrapByChoice(interview, choiceId);
+  if (trap) return { result: "trap", trap };
+  if (interview.rubric && choiceId === interview.rubric.choice_id) {
+    return { result: "correct", trap: null };
+  }
+  return { result: "fallback", trap: null };
+}
+
+// レベル絞込：target_level の表記で振り分ける
+function matchesLevel(stage, filter) {
+  if (!filter || filter === "all") return true;
+  const lvl = stage.target_level || "";
+  if (filter === "junior") return lvl.includes("高校受験");
+  if (filter === "common") return lvl.includes("共通テスト");
+  if (filter === "exam") return lvl.includes("難関大") || lvl.includes("二次");
+  return true;
+}
+
+// 親密度の称号（総親密度 0〜560 に対して7段階）
+const INTIMACY_TITLES = [
+  { min: 560, title: "伝説のインタビュアー" },
+  { min: 480, title: "著者たちの盟友" },
+  { min: 360, title: "本音を引き出す名インタビュアー" },
+  { min: 240, title: "著者の懐刀" },
+  { min: 140, title: "気の置けない聞き手" },
+  { min: 60, title: "顔なじみの聞き手" },
+  { min: 0, title: "通りすがりの読者" },
+];
+function intimacyTitle(total) {
+  for (const t of INTIMACY_TITLES) if (total >= t.min) return t.title;
+  return "通りすがりの読者";
+}
+
+function totalIntimacyOf(chapters) {
+  let total = 0;
+  for (const c of chapters) for (const st of c.stages) for (const iv of st.interviews) {
+    total += iv.deep_confession?.intimacy_gain || 0;
+  }
+  return total;
+}
+function totalInterviewsOf(chapters) {
+  return chapters.reduce((n, c) => n + c.stages.reduce((m, st) => m + st.interviews.length, 0), 0);
+}
+// 著者ごとの満点（その著者の全インタビューの intimacy_gain 合計）
+function authorMaxIntimacy(stage) {
+  return stage.interviews.reduce((n, iv) => n + (iv.deep_confession?.intimacy_gain || 0), 0);
+}
+// 著者ごとの獲得済み親密度（本音を引き出したインタビュー分のみ）
+function authorIntimacy(state, stage) {
+  let sum = 0;
+  for (const iv of stage.interviews) {
+    if (state.honne[iv.interview_id]) sum += iv.deep_confession?.intimacy_gain || 0;
+  }
+  return sum;
+}
+
+// 進捗への誤答記録：コンボをリセットし、リベンジ待ち（復習対象）へ入れる
+function applyWrong(state, interviewId) {
+  state.combo = 0;
+  state.weak[interviewId] = true;
+}
+// 本音の引き出しに成功：初回のみ親密度を加算。一発成功（そのセッションで誤答0）ならリベンジ待ちから外す
+function applyConfess(state, interview, wrongAttempts) {
+  let gainAdded = 0;
+  if (!state.honne[interview.interview_id]) {
+    gainAdded = interview.deep_confession?.intimacy_gain || 0;
+    state.intimacy += gainAdded;
+  }
+  state.honne[interview.interview_id] = true;
+  state.cleared[interview.interview_id] = true;
+  state.combo = (state.combo || 0) + 1;
+  if (state.combo > (state.bestCombo || 0)) state.bestCombo = state.combo;
+  let removedWeak = false;
+  if (wrongAttempts === 0 && state.weak[interview.interview_id]) {
+    delete state.weak[interview.interview_id];
+    removedWeak = true;
+  }
+  return { gainAdded, removedWeak };
+}
+
+function escapeHtml(s) {
+  return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+return {
+  normalizeText, pointFragments, usableKeywords, freeNeed, matchTrapByText, judgeFreeText,
+  findChoice, matchTrapByChoice, judgeChoice, matchesLevel,
+  INTIMACY_TITLES, intimacyTitle, totalIntimacyOf, totalInterviewsOf,
+  authorMaxIntimacy, authorIntimacy, applyWrong, applyConfess, escapeHtml,
+};
+})();
+/* === LOGIC END === */
+</script>
+<script>
+"use strict";
+const L = HonneLogic;
+const TOTAL_INTIMACY = L.totalIntimacyOf(CHAPTERS);
+const TOTAL_INTERVIEWS = L.totalInterviewsOf(CHAPTERS);
+const IV_INDEX = new Map(); // interview_id -> {chapter, stage, interview}
+for (const c of CHAPTERS) for (const st of c.stages) for (const iv of st.interviews) {
+  IV_INDEX.set(iv.interview_id, { chapter: c, stage: st, interview: iv });
+}
+const LEVELS = [
+  { id: "all", label: "すべて" },
+  { id: "junior", label: "高校受験" },
+  { id: "common", label: "共通テスト" },
+  { id: "exam", label: "難関大二次" },
+];
+const CH_COLOR = { 1: "#2563eb", 2: "#7c3aed", 3: "#be185d", 4: "#b45309" };
+
+const PROGRESS_KEY = "honne.progress.v1";
+const MUTED_KEY = "honne.muted.v1";
+let prog = { cleared: {}, honne: {}, weak: {}, intimacy: 0, combo: 0, bestCombo: 0 };
+try {
+  const raw = localStorage.getItem(PROGRESS_KEY);
+  if (raw) prog = Object.assign(prog, JSON.parse(raw));
+} catch (e) {}
+function saveProgress() {
+  try { localStorage.setItem(PROGRESS_KEY, JSON.stringify(prog)); } catch (e) {}
+}
+function honneCount() { return Object.keys(prog.honne).length; }
+function weakCount() { return Object.keys(prog.weak).length; }
+
+/* ---------- 効果音（Web Audio・三角波・1.3kHz帯） ---------- */
+let actx = null;
+let muted = false;
+try { muted = localStorage.getItem(MUTED_KEY) === "1"; } catch (e) {}
+function tone(freq, delay, dur, vol) {
+  if (muted) return;
+  try {
+    actx = actx || new (window.AudioContext || window.webkitAudioContext)();
+    if (actx.state === "suspended") actx.resume();
+    const t0 = actx.currentTime + (delay || 0);
+    const o = actx.createOscillator(), g = actx.createGain();
+    o.type = "triangle";
+    o.frequency.setValueAtTime(freq, t0);
+    g.gain.setValueAtTime(0.0001, t0);
+    g.gain.exponentialRampToValueAtTime(vol || 0.5, t0 + 0.015);
+    g.gain.exponentialRampToValueAtTime(0.0001, t0 + dur);
+    o.connect(g); g.connect(actx.destination);
+    o.start(t0); o.stop(t0 + dur + 0.05);
+  } catch (e) {}
+}
+const SFX = {
+  tap() { tone(1318, 0, 0.08, 0.35); },
+  boke() { tone(392, 0, 0.16, 0.4); tone(330, 0.1, 0.22, 0.4); },
+  confess() { tone(1047, 0, 0.12, 0.5); tone(1318, 0.09, 0.12, 0.5); tone(1568, 0.18, 0.2, 0.5); },
+  fanfare() { tone(1047, 0, 0.12, 0.5); tone(1318, 0.1, 0.12, 0.5); tone(1568, 0.2, 0.12, 0.5); tone(2093, 0.3, 0.3, 0.5); },
+};
+function refreshSoundToggles() {
+  for (const id of ["sound-toggle-title", "sound-toggle-map", "sound-toggle-memo"]) {
+    const el = document.getElementById(id);
+    if (el) el.textContent = muted ? "音：オフ" : "音：オン";
+  }
+}
+function toggleMute() {
+  muted = !muted;
+  try { localStorage.setItem(MUTED_KEY, muted ? "1" : "0"); } catch (e) {}
+  refreshSoundToggles();
+  if (!muted) SFX.tap();
+}
+
+/* ---------- 著者の顔（SVG・著者×表情） ---------- */
+const AUTHOR_LOOK = {
+  author_kurosawa: { hair: "#2e2a33", style: "short", glasses: true, skin: "#ffd9b3" },
+  author_shirakawa: { hair: "#6b4226", style: "long", glasses: false, skin: "#ffe3c2" },
+  author_takahashi: { hair: "#55555f", style: "short", glasses: true, skin: "#ffd9b3" },
+  author_minakami: { hair: "#274156", style: "wavy", glasses: false, skin: "#ffe0bd", earring: true },
+  author_saeki: { hair: "#37474f", style: "messy", glasses: false, skin: "#ffd9b3" },
+  author_exam_panel: { hair: "#c9ccd4", style: "prof", glasses: true, skin: "#ffd2a8", beard: true },
+};
+function starPts(cx, cy, r) {
+  const pts = [];
+  for (let i = 0; i < 10; i++) {
+    const ang = -Math.PI / 2 + i * Math.PI / 5, rad = i % 2 === 0 ? r : r * 0.45;
+    pts.push((cx + rad * Math.cos(ang)).toFixed(1) + "," + (cy + rad * Math.sin(ang)).toFixed(1));
+  }
+  return pts.join(" ");
+}
+function renderAuthor(authorId, emotion) {
+  const a = AUTHOR_LOOK[authorId] || AUTHOR_LOOK.author_kurosawa;
+  const ink = "#26222e";
+  let hair = "";
+  if (a.style === "long") {
+    hair = `<path d="M38 108 a62 66 0 0 1 124 0 l6 62 -26 0 -4 -52 a52 56 0 0 0 -76 0 l-4 52 -26 0 z" fill="${a.hair}"/>`;
+  } else if (a.style === "wavy") {
+    hair = `<path d="M40 112 a60 64 0 0 1 120 0 l4 34 -22 0 -3 -30 a50 54 0 0 0 -78 0 l-3 30 -22 0 z" fill="${a.hair}"/>`;
+  } else if (a.style === "messy") {
+    hair = `<path d="M46 96 L52 58 L68 74 L80 48 L94 66 L106 44 L118 64 L134 50 L142 76 L154 66 L152 100 a54 50 0 0 0 -104 0 z" fill="${a.hair}"/>`;
+  } else if (a.style === "prof") {
+    hair = `<path d="M48 92 a54 54 0 0 1 104 0 l0 -8 a54 46 0 0 0 -104 0 z" fill="${a.hair}"/><rect x="44" y="88" width="10" height="34" rx="5" fill="${a.hair}"/><rect x="146" y="88" width="10" height="34" rx="5" fill="${a.hair}"/>`;
+  } else {
+    hair = `<path d="M47 100 a53 55 0 0 1 106 0 l0 -12 a53 44 0 0 0 -106 0 z" fill="${a.hair}"/>`;
+  }
+  const beard = a.beard ? `<path d="M62 138 a44 40 0 0 0 76 0 a50 44 0 0 1 -76 0 z" fill="${a.hair}" opacity="0.9"/>` : "";
+  // 目
+  let eyes = "";
+  const eyeY = 108;
+  if (emotion === "impressed_smile") {
+    eyes = `<path d="M64 110 q14 -13 28 0" stroke="${ink}" stroke-width="5" fill="none" stroke-linecap="round"/><path d="M108 110 q14 -13 28 0" stroke="${ink}" stroke-width="5" fill="none" stroke-linecap="round"/>`;
+  } else if (emotion === "excited_lean_in") {
+    eyes = `<polygon points="${starPts(78, eyeY, 13)}" fill="#e8a33d"/><polygon points="${starPts(122, eyeY, 13)}" fill="#e8a33d"/>`;
+  } else if (emotion === "moved_tears") {
+    eyes = `<circle cx="78" cy="${eyeY}" r="6.5" fill="${ink}"/><circle cx="122" cy="${eyeY}" r="6.5" fill="${ink}"/><circle cx="80.5" cy="105" r="2.4" fill="#fff"/><circle cx="124.5" cy="105" r="2.4" fill="#fff"/><path d="M66 122 q4 10 0 16 q-6 -6 0 -16z" fill="#7cc4e8"/><path d="M134 122 q4 10 0 16 q-6 -6 0 -16z" fill="#7cc4e8"/>`;
+  } else if (emotion === "cold_stare") {
+    eyes = `<rect x="66" y="105" width="24" height="4.5" rx="2" fill="${ink}"/><rect x="110" y="105" width="24" height="4.5" rx="2" fill="${ink}"/><circle cx="78" cy="114" r="3" fill="${ink}"/><circle cx="122" cy="114" r="3" fill="${ink}"/>`;
+  } else if (emotion === "frown_sigh") {
+    eyes = `<path d="M64 104 q14 7 28 2" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M108 106 q14 5 28 -2" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><circle cx="78" cy="113" r="3.6" fill="${ink}"/><circle cx="122" cy="113" r="3.6" fill="${ink}"/>`;
+  } else if (emotion === "annoyed_glasses") {
+    eyes = `<circle cx="82" cy="${eyeY}" r="5" fill="${ink}"/><circle cx="126" cy="${eyeY}" r="5" fill="${ink}"/>`;
+  } else {
+    eyes = `<circle cx="78" cy="${eyeY}" r="5.8" fill="${ink}"/><circle cx="122" cy="${eyeY}" r="5.8" fill="${ink}"/><circle cx="80.2" cy="105.5" r="1.9" fill="#fff"/><circle cx="124.2" cy="105.5" r="1.9" fill="#fff"/>`;
+  }
+  // 眉
+  let brows = "";
+  if (emotion === "frown_sigh" || emotion === "annoyed_glasses") {
+    brows = `<path d="M63 88 L93 97" stroke="${ink}" stroke-width="5" stroke-linecap="round"/><path d="M137 88 L107 97" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>`;
+  } else if (emotion === "cold_stare") {
+    brows = `<path d="M64 90 L94 90" stroke="${ink}" stroke-width="5" stroke-linecap="round"/><path d="M106 90 L136 90" stroke="${ink}" stroke-width="5" stroke-linecap="round"/>`;
+  } else if (emotion === "moved_tears") {
+    brows = `<path d="M64 94 L92 86" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/><path d="M136 94 L108 86" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/>`;
+  } else if (emotion === "impressed_smile" || emotion === "excited_lean_in") {
+    brows = `<path d="M64 88 q14 -8 28 -2" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M108 86 q14 -6 28 2" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  } else {
+    brows = `<path d="M65 90 q13 -5 27 -1" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/><path d="M108 89 q14 -4 27 1" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  }
+  // 口
+  let mouth = "";
+  if (emotion === "impressed_smile") {
+    mouth = `<path d="M80 138 a20 15 0 0 0 40 0 z" fill="#7f1d1d"/>`;
+  } else if (emotion === "excited_lean_in") {
+    mouth = `<path d="M76 136 a24 19 0 0 0 48 0 z" fill="#7f1d1d"/><path d="M84 152 a16 7 0 0 0 32 0 z" fill="#e88a8a"/>`;
+  } else if (emotion === "moved_tears") {
+    mouth = `<path d="M86 143 q7 -5 14 0 q7 5 14 0" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  } else if (emotion === "cold_stare") {
+    mouth = `<path d="M86 145 L114 145" stroke="${ink}" stroke-width="4.5" stroke-linecap="round"/>`;
+  } else if (emotion === "frown_sigh") {
+    mouth = `<ellipse cx="100" cy="146" rx="6" ry="8" fill="#7f1d1d"/>`;
+  } else if (emotion === "annoyed_glasses") {
+    mouth = `<path d="M84 150 q16 -11 32 0" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  } else {
+    mouth = `<path d="M86 140 q14 9 28 0" stroke="${ink}" stroke-width="4.5" fill="none" stroke-linecap="round"/>`;
+  }
+  // 眼鏡
+  let glasses = "";
+  if (a.glasses || emotion === "annoyed_glasses") {
+    const glint = emotion === "annoyed_glasses"
+      ? `<polygon points="118,92 132,92 116,122 104,122" fill="#ffffff" opacity="0.55"/>` : "";
+    glasses = `<g fill="rgba(255,255,255,.10)" stroke="${ink}" stroke-width="4"><rect x="58" y="92" width="40" height="32" rx="9"/><rect x="102" y="92" width="40" height="32" rx="9"/></g><path d="M98 102 q2 -4 4 0" stroke="${ink}" stroke-width="4" fill="none"/>${glint}`;
+  }
+  const extras = [];
+  if (emotion === "frown_sigh") extras.push(`<path d="M152 128 q12 4 8 14 q-10 -2 -8 -14z" fill="#cfe8f5"/><circle cx="160" cy="118" r="3.4" fill="#7cc4e8"/>`);
+  if (emotion === "excited_lean_in") extras.push(`<polygon points="${starPts(34, 52, 11)}" fill="#eec25e"/><polygon points="${starPts(168, 44, 9)}" fill="#eec25e"/><polygon points="${starPts(172, 150, 8)}" fill="#eec25e"/>`);
+  if (a.earring) extras.push(`<circle cx="47" cy="128" r="4" fill="#eec25e" stroke="#8a6410" stroke-width="1.4"/>`);
+  return `<svg viewBox="0 0 200 200" width="100%" height="100%" role="img" aria-label="著者の顔">`
+    + hair
+    + `<ellipse cx="100" cy="106" rx="53" ry="57" fill="${a.skin}" stroke="${ink}" stroke-width="3.5"/>`
+    + beard + brows + eyes + mouth + glasses + extras.join("")
+    + `</svg>`;
+}
+
+/* ---------- 演出 ---------- */
+const confetti = (() => {
+  const cv = document.getElementById("confetti-canvas");
+  const ctx = cv.getContext("2d");
+  let parts = [], running = false;
+  const COLORS = ["#eec25e", "#c9962e", "#9c2b3a", "#14666b", "#2c3a67", "#f97316"];
+  function resize() { cv.width = innerWidth; cv.height = innerHeight; }
+  addEventListener("resize", resize); resize();
+  function tick() {
+    ctx.clearRect(0, 0, cv.width, cv.height);
+    parts = parts.filter((p) => p.y < cv.height + 24);
+    for (const p of parts) {
+      p.y += p.vy; p.x += p.vx + Math.sin(p.y / 26) * 1.2; p.rot += p.vr;
+      ctx.save(); ctx.translate(p.x, p.y); ctx.rotate(p.rot);
+      ctx.fillStyle = p.color; ctx.fillRect(-p.s / 2, -p.s / 2, p.s, p.s * 0.62);
+      ctx.restore();
+    }
+    if (parts.length) requestAnimationFrame(tick);
+    else { running = false; ctx.clearRect(0, 0, cv.width, cv.height); }
+  }
+  return function spawn(n) {
+    for (let i = 0; i < n; i++) {
+      parts.push({
+        x: Math.random() * cv.width, y: -20 - Math.random() * cv.height * 0.35,
+        vx: (Math.random() - 0.5) * 2.2, vy: 2.4 + Math.random() * 3.2,
+        s: 7 + Math.random() * 8, rot: Math.random() * Math.PI, vr: (Math.random() - 0.5) * 0.24,
+        color: COLORS[i % COLORS.length],
+      });
+    }
+    if (!running) { running = true; requestAnimationFrame(tick); }
+  };
+})();
+function flashFx() {
+  const f = document.getElementById("fx-flash");
+  f.style.opacity = "0.85";
+  setTimeout(() => { f.style.opacity = "0"; }, 130);
+}
+function stampFx() {
+  const s = document.getElementById("fx-stamp");
+  s.classList.remove("show"); void s.offsetWidth; s.classList.add("show");
+}
+function runConfessEffect(emotion) {
+  SFX.confess();
+  if (emotion === "excited_lean_in") confetti(130);
+  else if (emotion === "moved_tears") { flashFx(); stampFx(); confetti(36); }
+  else { confetti(56); stampFx(); }
+}
+
+/* ---------- 画面遷移 ---------- */
+const SCREENS = ["title", "map", "intro", "session", "result", "memo"];
+function show(name) {
+  for (const s of SCREENS) {
+    document.getElementById("screen-" + s).classList.toggle("active", s === name);
+  }
+  const active = document.querySelector(".screen.active");
+  if (active) active.scrollTop = 0;
+}
+</script>
+<script>
+"use strict";
+/* ---------- タイトル ---------- */
+function refreshTitle() {
+document.getElementById("title-intimacy").textContent = prog.intimacy;
+document.getElementById("title-honne").textContent = honneCount();
+document.getElementById("title-rank").textContent = L.intimacyTitle(prog.intimacy);
+document.getElementById("title-weak").textContent = weakCount();
+const box = document.getElementById("title-authors");
+box.innerHTML = "";
+for (const c of CHAPTERS) for (const st of c.stages) {
+const d = document.createElement("div");
+d.className = "ta-face";
+d.innerHTML = renderAuthor(st.author_persona.id, "normal");
+box.appendChild(d);
+}
+}
+
+/* ---------- マップ ---------- */
+const ui = { level: "all"};
+function refreshMapStats() {
+document.getElementById("map-intimacy").textContent = prog.intimacy;
+document.getElementById("map-rank").textContent = L.intimacyTitle(prog.intimacy);
+document.getElementById("map-honne").textContent = honneCount();
+document.getElementById("map-combo").textContent = prog.combo;
+document.getElementById("map-best").textContent = prog.bestCombo;
+document.getElementById("map-weak").textContent = weakCount();
+document.getElementById("map-progress").style.width = (prog.intimacy / TOTAL_INTIMACY * 100) + "%";
+}
+function renderLevelBar() {
+const box = document.getElementById("level-bar");
+box.querySelectorAll(".level-chip").forEach((el) => el.remove());
+for (const lv of LEVELS) {
+const n = CHAPTERS.reduce((acc, c) => acc + c.stages.filter((st) => L.matchesLevel(st, lv.id)).length, 0);
+const b = document.createElement("button");
+b.className = "level-chip" + (ui.level === lv.id? " active": "");
+b.textContent = `${lv.label}（${n}）`;
+b.onclick = () => { SFX.tap(); ui.level = lv.id; renderMap();};
+box.appendChild(b);
+}
+}
+function renderMap() {
+refreshMapStats();
+renderLevelBar();
+const box = document.getElementById("chapters-box");
+box.innerHTML = "";
+for (const c of CHAPTERS) {
+const stages = c.stages.filter((st) => L.matchesLevel(st, ui.level));
+if (!stages.length) continue;
+const block = document.createElement("div");
+block.className = "chapter-block";
+const head = document.createElement("div");
+head.className = "chapter-head";
+head.style.borderLeftColor = CH_COLOR[c.chapter_id] || "var(--wine)";
+head.textContent = `第${c.chapter_id}章 ${c.chapter_title}`;
+block.appendChild(head);
+const list = document.createElement("div");
+list.className = "stages";
+for (const st of stages) {
+const done = st.interviews.filter((iv) => prog.honne[iv.interview_id]).length;
+const aInt = L.authorIntimacy(prog, st);
+const aMax = L.authorMaxIntimacy(st);
+const card = document.createElement("button");
+card.className = "stage-card";
+card.style.borderLeftColor = CH_COLOR[c.chapter_id] || "var(--wine)";
+card.innerHTML = `
+<div class="st-face">${renderAuthor(st.author_persona.id, "normal")}</div>
+<div class="st-main">
+<div class="st-id">${st.stage_id} ／ ${L.escapeHtml(st.target_level)}</div>
+<div class="st-title">${L.escapeHtml(st.stage_title)}</div>
+<div class="st-author">${L.escapeHtml(st.author_persona.name)}（${L.escapeHtml(st.author_persona.genre)}）</div>
+<div class="st-meta">
+<span class="st-prog">本音 ${done}/${st.interviews.length} ・ 親密度 ${aInt}/${aMax}</span>
+<span class="mini-track"><span class="mini-fill" style="display:block;width:${aMax? aInt / aMax * 100: 0}%"></span></span>
+</div>
+</div>`;
+card.onclick = () => { SFX.tap(); openIntro(c, st);};
+list.appendChild(card);
+}
+block.appendChild(list);
+box.appendChild(block);
+}
+}
+
+/* ---------- ステージ紹介 ---------- */
+let introCtx = null;
+function openIntro(chapter, stage) {
+introCtx = { chapter, stage};
+const p = stage.author_persona;
+document.getElementById("intro-crumb").textContent = `第${chapter.chapter_id}章 ${stage.stage_id}`;
+document.getElementById("intro-level").textContent = `${stage.target_level} ／ 親密度 ${L.authorIntimacy(prog, stage)}/${L.authorMaxIntimacy(stage)}`;
+document.getElementById("intro-title").textContent = stage.stage_title;
+document.getElementById("intro-avatar").innerHTML = renderAuthor(p.id, "normal");
+document.getElementById("intro-author-name").textContent = p.name;
+document.getElementById("intro-author-genre").textContent = p.genre;
+document.getElementById("intro-author-quirk").textContent = p.quirk;
+document.getElementById("intro-greeting").textContent = "「" + p.greeting_line + "」";
+document.getElementById("intro-count").textContent = stage.interviews.length;
+const list = document.getElementById("intro-list");
+list.innerHTML = "";
+for (const iv of stage.interviews) {
+const item = document.createElement("div");
+item.className = "iv-item";
+const state = prog.honne[iv.interview_id]
+? `<span class="iv-state done">本音ゲット</span>`
+: prog.weak[iv.interview_id]
+? `<span class="iv-state weak">リベンジ待ち</span>`
+: `<span class="iv-state todo">未挑戦</span>`;
+item.innerHTML = `${state}<span>${L.escapeHtml(iv.topic_tag)}</span>`;
+list.appendChild(item);
+}
+show("intro");
+}
+
+/* ---------- セッション ---------- */
+let session = null;
+let memoReturn = "title";
+function startStage(chapter, stage) {
+session = {
+mode: "stage", chapter, stage,
+queue: stage.interviews.slice(), idx: 0,
+wrongAttempts: 0, solvedCount: 0, gainTotal: 0, gaveUpCount: 0,
+solved: false, gaveUp: false,
+};
+show("session");
+loadInterview();
+}
+function startSingle(interviewId) {
+const hit = IV_INDEX.get(interviewId);
+if (!hit) return;
+session = {
+mode: "single", chapter: hit.chapter, stage: hit.stage,
+queue: [hit.interview], idx: 0,
+wrongAttempts: 0, solvedCount: 0, gainTotal: 0, gaveUpCount: 0,
+solved: false, gaveUp: false,
+};
+show("session");
+loadInterview();
+}
+function currentInterview() { return session.queue[session.idx];}
+function setAuthorFace(emotion, aura, lean) {
+const box = document.getElementById("session-avatar");
+box.innerHTML = renderAuthor(session.stage.author_persona.id, emotion);
+box.classList.toggle("aura",!!aura);
+box.classList.remove("lean"); void box.offsetWidth;
+if (lean) box.classList.add("lean");
+}
+function refreshAuthorInt() {
+document.getElementById("session-author-int").textContent =
+`この著者との親密度 ${L.authorIntimacy(prog, session.stage)}/${L.authorMaxIntimacy(session.stage)} ・ 総親密度 ${prog.intimacy}`;
+}
+function addMsg(cls, who, text) {
+const feed = document.getElementById("dialogue-feed");
+const d = document.createElement("div");
+d.className = "msg " + cls;
+d.innerHTML = `<span class="msg-who">${L.escapeHtml(who)}</span>${L.escapeHtml(text)}`;
+feed.appendChild(d);
+feed.scrollTop = feed.scrollHeight;
+return d;
+}
+function addNode(node) {
+const feed = document.getElementById("dialogue-feed");
+feed.appendChild(node);
+feed.scrollTop = feed.scrollHeight;
+return node;
+}
+function strategyCardHtml(iv) {
+const es = iv.exam_strategy;
+return `<div class="sc-head">攻略：${L.escapeHtml(es.headline)}</div>
+<div class="sc-label">鉄則</div><div class="sc-text">${L.escapeHtml(es.rule)}</div>
+<div class="sc-label">陥りやすい罠</div><div class="sc-text trap">${L.escapeHtml(es.pitfall)}</div>`;
+}
+function showStrategy(iv) {
+const d = document.createElement("div");
+d.className = "strategy-card";
+d.innerHTML = strategyCardHtml(iv);
+addNode(d);
+}
+function loadInterview() {
+const iv = currentInterview();
+const p = session.stage.author_persona;
+session.wrongAttempts = 0;
+session.solved = false;
+session.gaveUp = false;
+document.getElementById("session-stage-badge").textContent = session.stage.stage_id + " ・ 第" + session.chapter.chapter_id + "章";
+document.getElementById("session-topic").textContent = iv.topic_tag;
+document.getElementById("session-count").textContent = `${session.idx + 1} / ${session.queue.length}`;
+document.getElementById("session-progress").style.width = (session.idx / session.queue.length * 100) + "%";
+document.getElementById("session-author-name").textContent = p.name;
+refreshAuthorInt();
+document.getElementById("passage-text").textContent = iv.passage_text;
+document.getElementById("strategy-slot").innerHTML = "";
+document.getElementById("next-row").style.display = "none";
+const feed = document.getElementById("dialogue-feed");
+feed.innerHTML = "";
+setAuthorFace("normal", false, false);
+if (session.idx === 0) addMsg("author", p.name, p.greeting_line);
+addMsg("user", "インタビュアー（キミ）", iv.user_prompt);
+renderInput(iv);
+feed.scrollTop = 0;
+}
+function renderInput(iv) {
+const area = document.getElementById("input-area");
+area.innerHTML = "";
+area.style.display = "";
+if (iv.input_mode === "interview_chat") {
+const chips = document.createElement("div");
+chips.className = "hint-chips";
+chips.innerHTML = `<span class="hc-label2">切り込みのヒント：</span>` +
+(iv.rubric.required_points || []).map((pt) => `<span class="hint-chip">${L.escapeHtml(pt)}</span>`).join("");
+area.appendChild(chips);
+const ta = document.createElement("textarea");
+ta.id = "free-input";
+ta.placeholder = "著者に切り込む：自分の読みを、本文の言葉でぶつけよう";
+ta.setAttribute("aria-label", "著者への切り込みを入力");
+area.appendChild(ta);
+const row = document.createElement("div");
+row.className = "free-row";
+const send = document.createElement("button");
+send.className = "btn gold";
+send.textContent = "切り込む！";
+send.onclick = () => submitFree();
+row.appendChild(send);
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (SR) {
+const mic = document.createElement("button");
+mic.className = "mic-btn";
+mic.innerHTML = `<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#26222e" stroke-width="2" stroke-linecap="round"><rect x="9" y="3" width="6" height="11" rx="3" fill="#26222e" stroke="none"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>`;
+mic.setAttribute("aria-label", "音声入力");
+mic.onclick = () => startVoice(mic, ta);
+row.appendChild(mic);
+}
+area.appendChild(row);
+} else {
+const box = document.createElement("div");
+box.className = "choices";
+for (const c of iv.choices || []) {
+const b = document.createElement("button");
+b.className = "choice-btn";
+b.dataset.choiceId = c.id;
+b.innerHTML = `<span class="ch-id">${L.escapeHtml(c.id)}</span><span>${L.escapeHtml(c.label)}</span>`;
+b.onclick = () => submitChoice(iv, c, b);
+box.appendChild(b);
+}
+area.appendChild(box);
+}
+maybeShowGiveUp(iv);
+}
+function maybeShowGiveUp(iv) {
+if (session.solved || session.gaveUp) return;
+if (session.wrongAttempts < 2) return;
+const area = document.getElementById("input-area");
+if (area.querySelector(".giveup-row")) return;
+const row = document.createElement("div");
+row.className = "giveup-row";
+const b = document.createElement("button");
+b.className = "linklike";
+b.textContent = "どうしても切り込めなければ、模範の切り込みを見る（本音は聞き出せず、リベンジ待ちに残ります）";
+b.onclick = () => giveUp(iv);
+row.appendChild(b);
+area.appendChild(row);
+}
+function startVoice(btn, ta) {
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+if (!SR) return;
+try {
+const rec = new SR();
+rec.lang = "ja-JP";
+rec.interimResults = false;
+btn.classList.add("rec");
+rec.onresult = (ev) => {
+const text = ev.results[0][0].transcript || "";
+ta.value = (ta.value? ta.value + "\n": "") + text;
+};
+rec.onend = () => btn.classList.remove("rec");
+rec.onerror = () => btn.classList.remove("rec");
+rec.start();
+} catch (e) { btn.classList.remove("rec");}
+}
+function afterWrong(iv, verdict) {
+L.applyWrong(prog, iv.interview_id);
+session.wrongAttempts++;
+saveProgress();
+const card = document.getElementById("session-card");
+card.classList.remove("shake"); void card.offsetWidth; card.classList.add("shake");
+SFX.boke();
+const p = session.stage.author_persona;
+if (verdict.result === "trap" && verdict.trap) {
+setAuthorFace(verdict.trap.author_emotion || "frown_sigh", false, false);
+addMsg("pushback", p.name + "（渋い顔）", verdict.trap.pushback_line);
+} else {
+setAuthorFace("frown_sigh", false, false);
+const hint = (iv.rubric.required_points || [])[0] || "";
+addMsg("pushback", p.name + "（渋い顔）",
+`……ふむ、まだ浅いな。本文の言葉にもう一度即して、切り込んでみてくれ。（ヒント：${hint}）`);
+}
+maybeShowGiveUp(iv);
+}
+function submitFree() {
+if (!session || session.solved || session.gaveUp) return;
+const iv = currentInterview();
+const ta = document.getElementById("free-input");
+const text = (ta.value || "").trim();
+if (!text) { ta.focus(); return;}
+addMsg("user", "インタビュアー（キミ）", text);
+const verdict = L.judgeFreeText(iv, text);
+if (verdict.result === "correct") confess(iv);
+else afterWrong(iv, verdict);
+}
+function submitChoice(iv, choice, btn) {
+if (!session || session.solved || session.gaveUp) return;
+addMsg("user", "インタビュアー（キミ）", choice.label);
+const verdict = L.judgeChoice(iv, choice.id);
+if (verdict.result === "correct") confess(iv);
+else {
+btn.disabled = true;
+btn.style.opacity = ".45";
+afterWrong(iv, verdict);
+}
+}
+function finishInterviewUI() {
+document.getElementById("input-area").style.display = "none";
+const row = document.getElementById("next-row");
+row.style.display = "";
+const last = session.idx + 1 >= session.queue.length;
+document.getElementById("btn-next-interview").textContent = last? "結果を見る →": "次のインタビューへ →";
+document.getElementById("session-progress").style.width = ((session.idx + 1) / session.queue.length * 100) + "%";
+const feed = document.getElementById("dialogue-feed");
+feed.scrollTop = feed.scrollHeight;
+}
+function confess(iv) {
+session.solved = true;
+const res = L.applyConfess(prog, iv, session.wrongAttempts);
+session.solvedCount++;
+session.gainTotal += res.gainAdded;
+saveProgress();
+const dc = iv.deep_confession;
+const p = session.stage.author_persona;
+runConfessEffect(dc.author_emotion);
+setAuthorFace(dc.author_emotion, true, dc.author_emotion === "excited_lean_in");
+addMsg("confess", p.name, dc.praise_line);
+const card = document.createElement("div");
+card.className = "honne-card";
+card.innerHTML = `<div class="hc-label">著者の本音 ― 本音メモ帳に保存しました</div>`
++ `<div class="hc-text">${L.escapeHtml(dc.secret_honne)}</div>`
++ `<div class="hc-gain">${res.gainAdded > 0? "親密度 +" + res.gainAdded: "親密度は獲得済み（再読で深まった！）"}</div>`;
+addNode(card);
+showStrategy(iv);
+refreshAuthorInt();
+finishInterviewUI();
+}
+function giveUp(iv) {
+if (session.solved || session.gaveUp) return;
+session.gaveUp = true;
+session.gaveUpCount++;
+L.applyWrong(prog, iv.interview_id);
+saveProgress();
+SFX.tap();
+setAuthorFace("frown_sigh", false, false);
+addMsg("memo", "模範の切り込み（要旨）", iv.rubric.canonical_summary);
+addMsg("memo", "取材メモ", "本音はまだ聞き出せていない。この問いは本音メモ帳の「リベンジ待ち」に残ります。");
+showStrategy(iv);
+finishInterviewUI();
+}
+function nextInterview() {
+SFX.tap();
+if (session.idx + 1 < session.queue.length) {
+session.idx++;
+loadInterview();
+} else {
+showResult();
+}
+}
+function showResult() {
+document.getElementById("result-intimacy").textContent = prog.intimacy;
+document.getElementById("result-rank").textContent = L.intimacyTitle(prog.intimacy);
+const list = document.getElementById("result-list");
+const rows = [];
+if (session.mode === "stage") {
+rows.push(["ステージ", `${session.stage.stage_id} ${session.stage.stage_title}`]);
+rows.push(["本音を引き出せた数", `${session.solvedCount} / ${session.queue.length}`]);
+} else {
+rows.push(["リベンジ", currentInterview().topic_tag]);
+rows.push(["結果", session.solved? (session.wrongAttempts === 0? "一発で本音ゲット！リストから卒業": "本音ゲット！（リストには残ります）"): "また今度リベンジ"]);
+}
+rows.push(["獲得した親密度", `+${session.gainTotal}`]);
+rows.push(["引き出した本音（累計）", `${honneCount()} / ${TOTAL_INTERVIEWS}`]);
+rows.push(["最高コンボ", `${prog.bestCombo}`]);
+list.innerHTML = rows.map(([k, v]) => `<div class="result-item"><span>${L.escapeHtml(k)}</span><span>${L.escapeHtml(v)}</span></div>`).join("");
+document.getElementById("result-weak").textContent = weakCount();
+show("result");
+}
+
+/* ---------- 本音メモ帳 ---------- */
+function renderMemo() {
+const body = document.getElementById("memo-body");
+body.innerHTML = "";
+let any = false;
+for (const c of CHAPTERS) for (const st of c.stages) {
+const p = st.author_persona;
+const head = document.createElement("div");
+head.className = "memo-author-head";
+head.innerHTML = `<div class="ma-face">${renderAuthor(p.id, "normal")}</div>
+<div><div class="ma-name">${L.escapeHtml(p.name)}</div>
+<div class="ma-int">${st.stage_id} ・ 親密度 ${L.authorIntimacy(prog, st)}/${L.authorMaxIntimacy(st)}</div></div>`;
+body.appendChild(head);
+for (const iv of st.interviews) {
+any = true;
+const item = document.createElement("div");
+item.className = "memo-item";
+const modeLabel = iv.input_mode === "interview_chat"? "自由インタビュー": "選択インタビュー";
+let inner = `<div class="mi-topic">${L.escapeHtml(iv.topic_tag)}</div>
+<div class="mi-meta">${st.stage_id} ／ ${modeLabel} ／ 弱点：${L.escapeHtml(iv.weakness_category)}</div>`;
+if (prog.honne[iv.interview_id]) {
+inner += `<div class="mi-honne">${L.escapeHtml(iv.deep_confession.secret_honne)}</div>
+<div class="mi-strategy">${L.escapeHtml(iv.exam_strategy.headline)} ― ${L.escapeHtml(iv.exam_strategy.rule)}（罠：${L.escapeHtml(iv.exam_strategy.pitfall)}）</div>`;
+} else {
+inner += `<div class="mi-locked">${prog.weak[iv.interview_id]
+? "本音はまだ聞き出せていません。模範の切り込みは確認済みです。自分の言葉で切り込み直して、本音を引き出しましょう。"
+: "まだ挑戦していません。著者に切り込んで、本音を引き出しましょう。"}</div>
+<div class="mi-row"><button class="btn gold">${prog.weak[iv.interview_id]? "リベンジする": "挑戦する"}</button></div>`;
+}
+item.innerHTML = inner;
+const btn = item.querySelector(".mi-row .btn");
+if (btn) btn.onclick = () => { SFX.tap(); startSingle(iv.interview_id);};
+body.appendChild(item);
+}
+}
+if (!any) body.innerHTML = `<div class="empty-note">メモ帳はまだ空です。</div>`;
+}
+
+/* ---------- 画面遷移ボタン ---------- */
+document.getElementById("btn-to-map").onclick = () => { SFX.tap(); renderMap(); show("map");};
+document.getElementById("btn-to-memo").onclick = () => { SFX.tap(); memoReturn = "title"; renderMemo(); show("memo");};
+document.getElementById("btn-back-title").onclick = () => { SFX.tap(); refreshTitle(); show("title");};
+document.getElementById("btn-back-map").onclick = () => { SFX.tap(); renderMap(); show("map");};
+document.getElementById("btn-start-stage").onclick = () => { SFX.fanfare(); if (introCtx) startStage(introCtx.chapter, introCtx.stage);};
+document.getElementById("btn-intro-memo").onclick = () => { SFX.tap(); memoReturn = "intro"; renderMemo(); show("memo");};
+document.getElementById("btn-quit-session").onclick = () => { SFX.tap(); renderMap(); show("map");};
+document.getElementById("btn-next-interview").onclick = () => nextInterview();
+document.getElementById("btn-result-map").onclick = () => { SFX.tap(); renderMap(); show("map");};
+document.getElementById("btn-result-memo").onclick = () => { SFX.tap(); memoReturn = "map"; renderMemo(); show("memo");};
+document.getElementById("btn-memo-back").onclick = () => {
+SFX.tap();
+if (memoReturn === "title") { refreshTitle(); show("title");}
+else if (memoReturn === "intro" && introCtx) show("intro");
+else { renderMap(); show("map");}
+};
+document.getElementById("sound-toggle-title").onclick = toggleMute;
+document.getElementById("sound-toggle-map").onclick = toggleMute;
+document.getElementById("sound-toggle-memo").onclick = toggleMute;
+document.getElementById("btn-update").onclick = () => {
+const u = new URL(location.href);
+u.searchParams.set("v", "1.0.0-" + Date.now());
+location.href = u.toString();
+};
+
+refreshSoundToggles();
+refreshTitle();
+show("title");
+</script>
+</body>
+</html>
